@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+##
+# This script is called by ep-cli-update, to mark that the CLI
+# has been updated
+#
+
+# Add lib path so the project's files can be required.
+$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
+
+# Local files
+require 'course-cli'
+
+unless ARGV[0]
+  puts "Missing required SHA argument"
+  exit(1)
+end
+
+CourseCli::UserConfig.update_config(
+  last_cli_update: Time.now.to_s,
+  last_sha: ARGV[0]
+)

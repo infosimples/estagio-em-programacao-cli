@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M01-E03</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M01-E03</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Aprender a criar <em>shell scripts</em> ou, mais especificamente, <a href="https://pt.wikipedia.org/wiki/Bash" target="_blank">Bash</a> scripts;</li>
+<li>Aprender a usar comandos básicos para baixar conteúdo da Web;</li>
+<li>Aprender a usar comandos básicos de busca de palavras em um texto; e</li>
+<li>Aprender a fazer um shell script que recebe parâmetros.</li>
+</ul>
+
+<h2>Conceitos novos</h2>
+
+<h4>Argumentos de um shell script</h4>
+
+<p>Um shell script pode ser chamado com argumentos. Todos os termos que você escreve depois do nome do
+script ficam acessíveis dentro do script através das variáveis especiais <code>$1</code>, <code>$2</code>, etc. São
+criadas tantas variáveis especiais quanto necessário, uma para cada argumento.</p>
+
+<p>Por exemplo, se você criar um script chamado <code>meu_script.sh</code> com o conteúdo a seguir:</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Primeiro parâmetro:&quot;</span> <span class="s2">&quot;$1&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Segundo parâmetro:&quot;</span> <span class="s2">&quot;$2&quot;</span>
+</pre></div>
+<p>Em seguida, você pode chamar o script pelo terminal com dois parâmetros da seguinte forma:</p>
+<div class="highlight"><pre><span class="c"># Note que os parâmetros são delimitados automaticamente por espaços em branco.</span>
+./meu_script.sh param-1 param-2
+</pre></div>
+<p>E a saída será:</p>
+<div class="highlight"><pre>Primeiro parâmetro: param-1
+Segundo parâmetro: param-2
+</pre></div>
+<p><strong>Importante:</strong> Como os argumentos são delimitados por espaços em branco, se o seu argumento tiver
+um espaço em branco, é necessário usar aspas em torno do argumento. Por exemplo:</p>
+<div class="highlight"><pre>./meu_script.sh <span class="s2">&quot;Parâmetro 1&quot;</span> <span class="s2">&quot;Parâmetro 2&quot;</span>
+</pre></div>
+<h2>Instruções</h2>
+
+<ol>
+<li><p>Crie um diretório para a resolução deste exercício, como você fez no <a href="m01-e01.html" target="_blank">Exercício 1</a>.</p></li>
+<li><p>No diretório do exercício (<code>~/workspace/ep-exercicios/m1/e3</code>), crie um arquivo com o nome <code>m1-e3.sh</code>.
+Assim como no Exercício 1, este arquivo será um shell script. Por isso, você já pode adicionar o <strong>shebang</strong>
+na primeira linha do arquivo.</p></li>
+<li><p>Escreva um <em>shell script</em> (sequência de comandos) que baixa um arquivo de uma URL (a URL deve ser passada como primeiro parâmetro do script,
+e ficará armazenada na variável especial <code>$1</code>) e imprime o número de ocorrências de um termo qualquer, passado
+pelo usuário como segundo parâmetro do script (isto é, o termo de busca estará na variável especial <code>$2</code>). Use a comparação <strong>case-insensitive</strong>.</p>
+
+<p>Note que esse exercício é apenas uma generalização do exercício anterior, usando parâmetros ao invés
+de deixar a URL e o termo de busca especificados diretamente no código do script.</p>
+
+<p>Exemplo de execução e saída esperada:</p>
+
+<p><img src="assets/images/m01_e03_out_example.png" alt="screenshot-w1-e1-2"></p></li>
+<li><p>Teste o seu script. Para fazer isso:</p>
+
+<ol>
+<li>Apague arquivos temporários (por exemplo, o arquivo que você baixou da Web).</li>
+<li>Execute o seu script em um terminal. Valem as mesmas dicas do <a href="m01-e01.html" target="_blank">Exercício 1</a>:
+verifique se o arquivo do script é <strong>executável</strong> e use o caminho até o script como se fosse o
+nome de um comando.</li>
+<li>Verifique se o seu script contou corretamente as ocorrências do termo passado.</li>
+</ol></li>
+<li><p>Quando você estiver satisfeito com o seu script, utilize a ferramenta <code>ep-cli</code>
+para executar a correção do exercício. Se você não se lembrar como fazer isso, pode consultar
+as instruções do <a href="m01-e01.html" target="_blank">Exercício 1</a> ou executar <code>ep-cli --help</code> no terminal.</p></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code>
+para enviar o resultado. Se você não se lembrar como fazer isso, pode consultar
+as instruções do <a href="m01-e01.html" target="_blank">Exercício 1</a> ou executar <code>ep-cli --help</code> no terminal.</p></li>
+</ol>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M04-E02</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M04-E02</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Aplicar conceitos básicos de Programação Orientada a Objetos (POO) usando a linguagem Ruby:
+
+<ul>
+<li>Herança</li>
+<li>Encapsulamento</li>
+<li>Polimorfismo</li>
+</ul></li>
+</ul>
+
+<h2>Instruções</h2>
+
+<p>Nesse exercício, vamos criar novas classes para conseguir representar produtos de diferentes tipos na nossa loja virtual. Os 3 tipos de produtos que queremos representar são: produtos físicos comuns (roupas, móveis, etc), produtos frescos (frutas, legumes, etc) e produtos digitais (e-books, arquivos de música, etc).</p>
+
+<p>Cada um destes tipos possui características específicas e, por isso, vamos precisar criar as seguintes classes: <code>PhysicalProduct</code>, <code>FreshProduct</code> e <code>DigitalProduct</code>.</p>
+
+<h3>PhysicalProduct</h3>
+
+<ol>
+<li><p>Crie o diretório <code>M4_DIR/simple_store/lib/products</code> usando o comando <code>mkdir</code>.</p></li>
+<li><p>Dentro desse diretório, crie o arquivo <code>physical_product.rb</code>.</p></li>
+<li><p>Nesse arquivo, defina a classe <code>PhysicalProduct</code>, que deve herdar da classe <code>Product</code>, já que um produto físico continua sendo um produto, apenas de um tipo mais específico.</p></li>
+<li><p>Essa classe não precisará de nenhum código adicional. Portanto, ela já está pronta e terá exatamente o mesmo comportamento da classe <code>Product</code>.</p></li>
+</ol>
+
+<h3>FreshProduct</h3>
+
+<ol>
+<li><p>Crie o arquivo <code>fresh_product.rb</code> no diretório <code>M4_DIR/simple_store/lib/products</code>.</p></li>
+<li><p>Nesse arquivo, defina a classe <code>FreshProduct</code>, que deve herdar da classe <code>Product</code>.</p></li>
+<li><p>Defina o método <code>initialize</code> nesta classe para podermos atribuir o valor de uma nova variável de instância:</p>
+
+<ul>
+<li><code>@expiration_date</code> (data de vencimento): deve ser uma data <strong>maior que a data de hoje</strong>. Caso a validação falhe, utilize o código abaixo para lançar um erro e interromper a execução do programa:</li>
+</ul>
+<div class="highlight"><pre><span class="nb">fail</span> <span class="no">SimpleStore</span><span class="o">::</span><span class="no">Error</span><span class="p">,</span> <span class="s1">&#39;O produto não pode estar vencido&#39;</span>
+</pre></div>
+<p><strong>Atenção</strong>: este método <code>initialize</code> deve atribuir o valor da nova variável <strong>em adição às outras variáveis de <code>Product</code></strong> que já estavam sendo atribuídas na classe-pai. Portanto, não se esqueça de chamar o <code>initialize</code> da classe-pai também!</p></li>
+<li><p>Crie um <em>getter</em> para o novo atributo desta classe (<code>expiration_date</code>).</p></li>
+</ol>
+
+<h3>DigitalProduct</h3>
+
+<ol>
+<li><p>Crie o arquivo <code>digital_product.rb</code> no diretório <code>M4_DIR/simple_store/lib/products</code>.</p></li>
+<li><p>Nesse arquivo, defina a classe <code>DigitalProduct</code>, que deve herdar da classe <code>Product</code>.</p></li>
+<li><p>Novamente, sobrescreva o método <code>initialize</code> nesta classe para atribuir o valor de duas variáveis adicionais de instância:</p>
+
+<ul>
+<li><code>@expiration_date</code> (data de vencimento): deve ser uma data <strong>maior que a data de hoje</strong>. Caso a validação falhe, utilize o código:</li>
+</ul>
+<div class="highlight"><pre><span class="nb">fail</span> <span class="no">SimpleStore</span><span class="o">::</span><span class="no">Error</span><span class="p">,</span> <span class="s1">&#39;O produto não pode estar vencido&#39;</span>
+</pre></div>
+<ul>
+<li><code>@url</code>: deve ser uma string <strong>iniciada por &quot;http&quot;</strong>. Caso a validação falhe, utilize o código:</li>
+</ul>
+<div class="highlight"><pre><span class="nb">fail</span> <span class="no">SimpleStore</span><span class="o">::</span><span class="no">Error</span><span class="p">,</span> <span class="s1">&#39;A URL do produto deve ser válida&#39;</span>
+</pre></div></li>
+<li><p>Crie dois <em>getters</em> para os novos atributos desta classe (<code>expiration_date</code> e <code>url</code>).</p></li>
+</ol>
+
+<h3>Product</h3>
+
+<ol>
+<li><p>Altere o método <code>Product#generate_control_code</code> para que a geração do código do produto utilize a constante <code>SimpleStore::PRODUCT_TYPES</code>, agora que temos outros tipos de produtos além de <code>Product</code>.</p>
+
+<p><strong>Dica</strong>: Perceba que as chaves o hash <code>SimpleStore::PRODUCT_TYPES</code> são exatamente os nomes das diferentes classes que você criou. Isso significa que você poderia utilizar algum método de Ruby para obter a classe de um objeto e usar o nome da classe para acessar o hash.</p></li>
+</ol>
+
+<h3>Observações</h3>
+
+<ul>
+<li><p>O argumento <code>expiration_date</code> será informado na forma de uma string com o formato: <code>&#39;AAAA-MM-DD&#39;</code>. Por exemplo:</p>
+<div class="highlight"><pre><span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="s1">&#39;expiration_date&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2016-07-20&#39;</span> <span class="c1"># 20 de Julho de 2017</span>
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="p">}</span>
+</pre></div>
+<p>Seu código nas classes <code>FreshProduct</code> e <code>DigitalProduct</code> deverá encontrar uma maneira de transformar este valor, que é uma string, em um objeto do tipo <code>Date</code>, para que você consiga validar a data informada. Consulte a documentação da classe <code>Date</code> para pesquisar como fazer isso.</p></li>
+</ul>
+
+<h3>Testando seu código</h3>
+
+<p>Você pode testar o seu código usando as mesmas duas formas que utilizou no <a href="m04-e01.html" target="_blank">exercício anterior</a>.</p>
+
+<h3>Correção e submissão do exercício</h3>
+
+<ul>
+<li><p>Quando você estiver satisfeito com a sua resposta, utilize a ferramenta <code>ep-cli</code> para executar a correção do exercício (comando <code>corrigir</code>).</p></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code> para enviar o resultado (comando <code>enviar</code>).</p></li>
+<li><p><strong>Atualização do seu GitHub:</strong> atualize o diretório <code>oop/simples_store</code> do seu repositório <code>studies</code> com as modificações desse exercício.</p></li>
+</ul>
+
+    </div>
+  </body>
+</html>

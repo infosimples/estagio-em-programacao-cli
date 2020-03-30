@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+#
+# Print all translation keys and its values
+#
+def traverse(hsh, str: '')
+  prefix = str.size > 0 ? "#{str}." : ''
+  hsh.each do |key, value|
+    if value.is_a?(Hash)
+      traverse(value, str: "#{prefix}#{key}")
+    else
+      if PRINT_VALUES
+        puts "#{prefix}#{key} : #{value}"
+      else
+        puts "#{prefix}#{key}"
+      end
+    end
+  end
+end
+
+PRINT_VALUES = ARGV.find { |arg| arg.to_s == '--values'}
+
+traverse(YAML.load(File.read(
+  File.expand_path('../../locales/pt-BR.yml', __FILE__))))

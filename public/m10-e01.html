@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M10-E01</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M10-E01</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Fazer deploy de uma aplicação Ruby on Rails no Heroku.</li>
+</ul>
+
+<h2>Instruções</h2>
+
+<ol>
+<li><p>Crie o diretório para a resolução deste exercício:</p>
+<div class="highlight"><pre>  mkdir -p ~/workspace/ep-exercicios/m10/e1
+</pre></div></li>
+<li><p>Faça um clone do repositório da aplicação <code>md5_generator</code> que está disponível no GitHub no endereço abaixo:</p>
+
+<p><a href="https://github.com/estagioemprogramacao/md5_generator" target="_blank">https://github.com/estagioemprogramacao/md5_generator</a></p></li>
+<li><p>Crie uma conta no <a href="https://www.heroku.com" target="_blank">Heroku</a>, caso você ainda não tenha uma.</p></li>
+<li><p>Através da interface web do Heroku, crie um novo app na sua conta. Atribua a ele o nome que você quiser.</p></li>
+<li><p>Realize a instalação do cliente de linha de comando do Heroku (Heroku CLI).</p></li>
+<li><p>Usando o Heroku CLI, adicione o Heroku como um <em>remote</em> do seu repositório Git local.</p></li>
+<li><p>Publique a aplicação no Heroku. Para isso, você deverá fazer um push do repositório para o Heroku usando o Git.</p></li>
+<li><p>Realize a migração do banco de dados. Você precisará usar novamente o Heroku CLI e rodar a rake task de migração de banco de dados do Rails.</p></li>
+<li><p>Abra o link que o Heroku gerou para a sua aplicação e verifique se ela está funcionando.</p></li>
+<li><p>No diretório do exercício (<code>~/workspace/ep-exercicios/m10/e1</code>), crie um
+arquivo com o nome <code>m10-e1.txt</code> e coloque na primeira linha dele a URL completa do seu app no Heroku.</p></li>
+<li><p>Utilize a ferramenta de correção automática do <code>ep-cli</code> para verificar se está tudo certo.</p>
+<div class="highlight"><pre>  ep-cli corrigir --dir ~/workspace/ep-exercicios/m10/e1 --dicas 10.1
+</pre></div></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code>
+para enviar o resultado.</p>
+<div class="highlight"><pre>  ep-cli enviar 10.1
+</pre></div></li>
+</ol>
+
+    </div>
+  </body>
+</html>

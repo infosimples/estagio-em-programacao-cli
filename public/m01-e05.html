@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M01-E05</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M01-E05</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Praticar o uso de comandos básicos do Unix através de um jogo de mistério.</li>
+</ul>
+
+<h2>Enunciado</h2>
+
+<h3>Assassinato na Linha de Comando</h3>
+<div class="highlight"><pre>.OOOOOOOOOOOOOOO @@                                   @@ OOOOOOOOOOOOOOOO.
+OOOOOOOOOOOOOOOO @@                                    @@ OOOOOOOOOOOOOOOO
+OOOOOOOOOO&#39;&#39;&#39;&#39;&#39;&#39; @@                                    @@ ```````OOOOOOOOO
+OOOOO&#39;&#39; aaa@@@@@@@@@@@@@@@@@@@@&quot;&quot;&quot;                   &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;@@aaaa `OOOO
+OOOOO,&quot;&quot;&quot;&quot;@@@@@@@@@@@@@@&quot;&quot;&quot;&quot;                                     a@&quot;&quot; OOOA
+OOOOOOOOOoooooo,                                            |OOoooooOOOOOS
+OOOOOOOOOOOOOOOOo,                                          |OOOOOOOOOOOOC
+OOOOOOOOOOOOOOOOOO                                         ,|OOOOOOOOOOOOI
+OOOOOOOOOOOOOOOOOO @          ASSASSINATO                  |OOOOOOOOOOOOOI
+OOOOOOOOOOOOOOOOO&#39;@           NA                           OOOOOOOOOOOOOOb
+OOOOOOOOOOOOOOO&#39;a&#39;            LINHA                        |OOOOOOOOOOOOOy
+OOOOOOOOOOOOOO&#39;&#39;              DE                           aa`OOOOOOOOOOOP
+OOOOOOOOOOOOOOb,..            COMANDO                       `@aa``OOOOOOOh
+OOOOOOOOOOOOOOOOOOo                                           `@@@aa OOOOo
+OOOOOOOOOOOOOOOOOOO|                                             @@@ OOOOe
+OOOOOOOOOOOOOOOOOOO@                               aaaaaaa       @@&#39;,OOOOn
+OOOOOOOOOOOOOOOOOOO@                        aaa@@@@@@@@&quot;&quot;        @@ OOOOOi
+OOOOOOOOOO~~ aaaaaa&quot;a                 aaa@@@@@@@@@@&quot;&quot;            @@ OOOOOx
+OOOOOO aaaa@&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot; &quot;&quot;            @@@@@@@@@@@@&quot;&quot;               @@@|`OOOO&#39;
+OOOOOOOo`@@a                  aa@@  @@@@@@@&quot;&quot;         a@        @@@@ OOOO9
+OOOOOOO&#39;  `@@a               @@a@@   @@&quot;&quot;           a@@   a     |@@@ OOOO3
+`OOOO&#39;       `@    aa@@       aaa&quot;&quot;&quot;          @a        a@     a@@@&#39;,OOOO&#39;
+</pre></div>
+<p>Aconteceu um assassinato na Cidade do Terminal, e a polícia precisa da sua ajuda.</p>
+
+<p>Para descobrir o culpado, você precisará de acesso a uma linha de comando.</p>
+
+<h3>Instruções</h3>
+
+<ol>
+<li><p>Crie um diretório para a resolução deste exercício, como você fez no <a href="m01-e01.html" target="_blank">Exercício 1</a>.</p></li>
+<li><p>Faça o download do jogo usando os seguintes comandos:</p>
+<div class="highlight"><pre><span class="c"># Cria uma variável para armazenar o caminho até o diretório do exercício.</span>
+<span class="c"># Note que não é permitido colocar espaços antes ou depois do sinal de &quot;=&quot;.</span>
+<span class="nv">dir_e5</span><span class="o">=</span>~/workspace/ep-exercicios/m1/e5
+
+<span class="c"># Download do jogo na forma de um arquivo zip.</span>
+wget https://github.com/deborasetton/clmystery/archive/pt-BR.zip -O <span class="nv">$dir_e5</span>/clmystery.zip
+
+<span class="c"># Extrai o conteúdo do zip para o diretório clmystery.</span>
+unzip <span class="nv">$dir_e5</span>/clmystery.zip -d <span class="nv">$dir_e5</span>/clmystery
+
+<span class="c"># Renomeia o diretório do mistério.</span>
+mv <span class="nv">$dir_e5</span>/clmystery/clmystery-pt-BR <span class="nv">$dir_e5</span>/misterio-init
+</pre></div></li>
+<li><p>Vá até o diretório do jogo:</p>
+<div class="highlight"><pre><span class="nb">cd</span> ~/workspace/ep-exercicios/m1/e5/misterio-init
+</pre></div></li>
+<li><p>Leia o arquivo <code>inicio</code>. Uma forma de fazer isto é com o seguinte comando:</p>
+<div class="highlight"><pre><span class="vg">cat</span><span class="w"> </span><span class="vg">inicio</span>
+</pre></div></li>
+<li><p>Resolva o mistério usando as instruções e pistas fornecidas. Não use um editor de texto para ler os arquivos! A ideia é aprender a usar os
+comandos básicos do Unix para resolver o mistério.</p>
+
+<p>Aqui está um resumo de alguns comandos que poderão ser úteis (você também pode
+usar outros além desses):</p></li>
+</ol>
+
+<ul>
+<li><code>cd</code>: muda o diretório atual.</li>
+<li><code>ls</code>: lista arquivos existentes em um diretório.</li>
+<li><code>cat</code>: imprime o conteúdo de um ou mais arquivos.</li>
+<li><code>head</code>: imprime as primeiras linhas de um arquivo.</li>
+<li><code>tail</code>: imprime as últimas linhas de um arquivo.</li>
+<li><code>grep</code>: busca um texto em um ou mais arquivos. Por padrão, imprime na saída as linhas que continham o texto buscado.</li>
+</ul>
+
+<h4>Dicas</h4>
+
+<ul>
+<li><p>Não se esqueça de que a maioria dos comandos aceita opções para alterar o
+comportamento (por exemplo, formatar a saída de um jeito diferente). Utilize
+o comando <code>man</code> para saber mais sobre as opções aceitas por um comando,
+e.g. <code>man grep</code>.</p></li>
+<li><p>Se você estiver com dificuldade em algum ponto, consulte os arquivos de
+dicas, em ordem (&quot;dica1&quot;, &quot;dica2&quot;, &quot;dica3&quot;, etc).</p></li>
+</ul>
+
+<h4>Solução</h4>
+
+<p>Para ver a solução, leia o arquivo <code>solucao</code>.</p>
+
+<h3>Créditos</h3>
+
+<p>A versão original deste mistério foi escrita por <a href="http://github.com/veltman" target="_blank">Noah Veltman</a>.</p>
+
+<h2>Instruções do exercício</h2>
+
+<ol>
+<li><p>No diretório do exercício (<code>m1/e5</code>), crie um arquivo de texto com o nome <code>m1-e5.txt</code>.</p></li>
+<li><p>Nesse arquivo, escreva a solução para o mistério, isto é, escreva o nome do assassino que você
+identificou. Por exemplo, se o assassino for &quot;Maria da Silva&quot;, o conteúdo do arquivo deverá ser:</p>
+<div class="highlight"><pre>Maria da Silva
+</pre></div></li>
+<li><p>Quando você estiver satisfeito com a sua resposta, utilize a ferramenta <code>ep-cli</code>
+para executar a correção do exercício.</p></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code>
+para enviar o resultado.</p></li>
+</ol>
+
+    </div>
+  </body>
+</html>

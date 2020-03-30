@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M02-E02</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M02-E02</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Aprender a configurar o nome e o email do usuário no Git; e</li>
+<li>Entender que é possível existir uma configuração global do Git e outras configurações específicas por repositório.</li>
+</ul>
+
+<h2>Instruções</h2>
+
+<ol>
+<li><p>Quando um commit é criado, o nome e o email do autor do commit ficam associados a ele. Você deve ter percebido isso quando usamos o comando <code>git log</code>, como destacado na imagem abaixo:</p>
+
+<p><img src="assets/images/m02_e02_commit_author.png" alt="screenshot-m2-e1-1"></p></li>
+<li><p>O Git não tira essa informação da cartola. É necessário que o nome e o email do programador sejam configurados no ambiente para o que o Git registre corretamente essas informações nos commits. Essa configuração é feita com o comando <code>git config</code>.</p></li>
+<li><p>É possível fazer dois tipos de configurações:</p>
+
+<ul>
+<li><strong>Configuração específica do repositório</strong>: o nome e o email ficam salvos apenas para um repositório. Se o programador trabalha em mais de um projeto e, portanto, tem mais de um repositório no seu ambiente, é possível configurar nomes e emails diferentes em cada repositório.</li>
+<li><strong>Configuração global</strong>: é uma configuração geral do Git, que é utilizada caso não exista uma configuração específica para o repositório. No dia-a-dia, é comum que apenas a configuração global seja realizada.</li>
+</ul></li>
+<li><p>O comando <code>git config</code> pode receber dois argumentos: o nome de uma variável e o valor desejado para ela. Então, para alterar uma <strong>configuração global</strong>, use o comando:</p>
+<div class="highlight"><pre>  git config --global &lt;variavel&gt; &lt;valor_desejado&gt;
+</pre></div>
+<p>E para alterar uma <strong>configuração específica do repositório</strong>, use o comando:</p>
+<div class="highlight"><pre>  git config &lt;variavel&gt; &lt;valor_desejado&gt;
+</pre></div>
+<p><strong>Importante:</strong> no caso de configuração específica, é necessário executar o comando dentro do diretório do repositório.</p></li>
+<li><p>Abra o terminal do Cloud9.</p></li>
+<li><p>Configure o <strong>nome de usuário global</strong> do Git como <code>Global User Name</code>. A variável que armazena o nome de usuário é <code>user.name</code>.</p></li>
+<li><p>Configure o <strong>email de usuário global</strong> do Git como <code>global_user@email.com</code>. A variável que armazena o email do usuário é <code>user.email</code>.</p></li>
+<li><p>Entre no diretório do repositório local (<code>~/workspace/ep-exercicios/m2/ep-m2-repo</code>).</p></li>
+<li><p>Configure com o seu nome o <strong>nome do usuário específico</strong> do repositório. A variável que armazena o nome de usuário é <code>user.name</code></p></li>
+<li><p>Configure com o seu email o <strong>email do usuário específico</strong> do repositório. A variável que armazena o email do usuário é <code>user.email</code>.</p></li>
+<li><p>Utilize a ferramenta de correção automática do <code>ep-cli</code> para verificar se está tudo certo.</p>
+<div class="highlight"><pre>  ep-cli corrigir --dir ~/workspace/ep-exercicios/m2 --dicas 2.2
+</pre></div></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code>
+para enviar o resultado.</p>
+<div class="highlight"><pre>  ep-cli enviar 2.2
+</pre></div></li>
+</ol>
+
+    </div>
+  </body>
+</html>

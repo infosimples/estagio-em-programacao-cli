@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M01-E02</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M01-E02</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Aprender a criar <em>shell scripts</em> ou, mais especificamente, <a href="https://pt.wikipedia.org/wiki/Bash" target="_blank">Bash</a> scripts;</li>
+<li>Aprender a usar comandos básicos para baixar conteúdo da Web; e</li>
+<li>Aprender a usar comandos básicos de busca de palavras em um texto.</li>
+</ul>
+
+<h2>Instruções</h2>
+
+<ol>
+<li><p>Crie um diretório para a resolução deste exercício, como você fez no <a href="m01-e01.html" target="_blank">Exercício 1</a>.</p></li>
+<li><p>No diretório do exercício (<code>~/workspace/ep-exercicios/m1/e2</code>), crie um arquivo com o nome <code>m1-e2.sh</code>.
+Assim como no Exercício 1, este arquivo será um shell script. Por isso, você já pode adicionar o <strong>shebang</strong>
+na primeira linha do arquivo.</p></li>
+<li><p>Escreva um <em>shell script</em> (sequência de comandos) que baixa o arquivo HTML da URL <a href="http://www.tldp.org/LDP/intro-linux/html/intro-linux.html" target="_blank">http://www.tldp.org/LDP/intro-linux/html/intro-linux.html</a> e escreve na tela as seguintes linhas:</p>
+<div class="highlight"><pre>Linux: X
+linux: Y
+linux (case-insensitive): Z
+</pre></div>
+<p>Em que:</p>
+
+<ul>
+<li>X = número de ocorrências do termo &quot;Linux&quot;</li>
+<li>Y = número de ocorrências do termo &quot;linux&quot;</li>
+<li>Z = número de ocorrências do termo &quot;linux&quot; não importando se as letras estão em maiúsculo
+ou minúsculo (isto é, <em>case-insensitive</em>)</li>
+</ul>
+
+<p>A contagem Z deve incluir a contagem feita em X e em Y e deve acrescentar ainda termos como &quot;liNux&quot; em que há uma mistura entre letras maiúsculas e minúsculas. Esse tipo de comparação entre palavras em que não importa se as letras são maiúsculas ou minúsculas chamamos de comparação <em>case-insensitive</em>.</p>
+
+<p><strong>Dica 1:</strong> para baixar uma página da Web, você pode utilizar o comando <code>wget</code>, que recebe uma URL como parâmetro e salva a página em um arquivo. O nome do arquivo pode ser controlado usando a opção <code>-O</code>.</p>
+
+<p><strong>Dica 2:</strong> lembre-se de que os comandos podem ser utilizados com opções. Estas opções podem ser visualizadas usando o comando <code>man</code> ou ainda usando a opção <code>--help</code>. Por exemplo, para conhecer mais sobre o comando <code>wget</code>, você pode executar <code>man wget</code> ou <code>wget --help</code> no terminal.</p></li>
+<li><p>Teste o seu script. Para fazer isso:</p>
+
+<ol>
+<li>Apague arquivos temporários (por exemplo, o arquivo que você baixou da Web).</li>
+<li>Execute o seu script em um terminal. Valem as mesmas dicas do <a href="m01-e01.html" target="_blank">Exercício 1</a>:
+verifique se o arquivo do script é <strong>executável</strong> e use o caminho até o script como se fosse o
+nome de um comando.</li>
+<li><p>Verifique se o seu script contou corretamente os números dos termos pedidos.
+O resultado deverá ser parecido com o exemplo abaixo. Note que os números aqui são apenas
+exemplos, e não o resultado esperado.</p>
+<div class="highlight"><pre>Linux: 243
+linux: 20
+linux (case-insensitive): 271
+</pre></div></li>
+</ol></li>
+<li><p>Quando você estiver satisfeito com o seu script, utilize a ferramenta <code>ep-cli</code>
+para executar a correção do exercício. Se você não se lembrar como fazer isso, pode consultar
+as instruções do <a href="m01-e01.html" target="_blank">Exercício 1</a> ou executar <code>ep-cli --help</code> no terminal.</p></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code>
+para enviar o resultado. Se você não se lembrar como fazer isso, pode consultar
+as instruções do <a href="m01-e01.html" target="_blank">Exercício 1</a> ou executar <code>ep-cli --help</code> no terminal.</p></li>
+</ol>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M02-E01</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M02-E01</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Aprender a criar um repositório Git no <a href="https://www.github.com" target="_blank">GitHub</a>; e</li>
+<li>Aprender a clonar o repositório na máquina local.</li>
+</ul>
+
+<h2>Instruções</h2>
+
+<ol>
+<li><p>Crie o diretório para a resolução dos exercícios do módulo 2:</p>
+<div class="highlight"><pre>  mkdir -p ~/workspace/ep-exercicios/m2
+</pre></div></li>
+<li><p>Nesta aula, não será necessário criar outros diretórios específicos para cada um dos exercícios dentro do diretório criado no passo anterior. Isso é devido ao fato de todos os exercícios se baserem em repositório Git, ou seja, em um único diretório.</p></li>
+<li><p>Crie uma conta no <a href="https://www.github.com" target="_blank">GitHub</a>, caso você ainda não tenha uma.</p></li>
+<li><p>Através da interface web do GitHub, crie um novo repositório na sua conta com o nome <code>ep-m2-repo</code>.</p></li>
+<li><p>Agora, você irá clonar o repositório remoto criado no Github para o seu ambiente local no Cloud9. O diretório do repositório Git deve ser clonado dentro do diretório destinado aos exercícios do módulo 2. Então, após clonar o respositório, deve existir o seguinte diretório no seu sistema de arquivos:</p>
+<div class="highlight"><pre>  ~/workspace/ep-exercicios/m2/ep-m2-repo
+</pre></div></li>
+<li><p>Para clonar o repositório, deverá ser usado o comando <code>git clone</code>. Você pode usar esse comando fornecendo dois parâmetros:</p>
+
+<ul>
+<li>O endereço (URL) do repositório remoto (que pode ser encontrado no Github); e</li>
+<li>O nome diretório a ser criado localmente para receber o repositório.</li>
+</ul>
+
+<p>Então, use o comando da seguinte forma:</p>
+<div class="highlight"><pre>  git clone &lt;repositorio&gt; &lt;diretorio&gt;
+</pre></div>
+<p><strong>Dica:</strong> para fazer o clone do GitHub, utilize a opção <strong>HTTPS</strong> ao invés de <strong>SSH</strong>.</p></li>
+<li><p>Utilize a ferramenta de correção automática do <code>ep-cli</code> para verificar se está tudo certo.</p>
+<div class="highlight"><pre>  ep-cli corrigir --dir ~/workspace/ep-exercicios/m2 --dicas 2.1
+</pre></div></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code>
+para enviar o resultado.</p>
+<div class="highlight"><pre>  ep-cli enviar 2.1
+</pre></div></li>
+</ol>
+
+    </div>
+  </body>
+</html>

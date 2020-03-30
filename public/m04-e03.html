@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M04-E03</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M04-E03</h1>
+
+<h2>Objetivos</h2>
+
+<ul>
+<li>Aplicar conceitos básicos de Programação Orientada a Objetos (POO) usando a linguagem Ruby:
+
+<ul>
+<li>Mixins</li>
+</ul></li>
+</ul>
+
+<h2>Instruções</h2>
+
+<p>Neste exercício, queremos implementar a seguinte regra de negócio: produtos frescos e produtos digitais possuem uma data de validade, que fica armazenada na variável de instância <code>@expiration_date</code>. Sabendo disso, queremos dar um desconto para produtos que estão próximos da data de vencimento, para tentar dar vazão ao nosso estoque.</p>
+
+<ol>
+<li><p>Para fazer isso, você deverá implementar os seguintes métodos do módulo <code>DiscountEligible</code>:</p>
+
+<ul>
+<li><code>days_to_expire</code></li>
+<li><code>discount_amount</code></li>
+<li><code>discounted_price</code></li>
+</ul>
+
+<p>Este módulo já está parcialmente implementado (veja o arquivo <code>discount_eligible.rb</code>), e os métodos que você precisa implementar estão descritos neste arquivo.</p></li>
+<li><p>Em seguida, você precisará alterar as classes <code>FreshProduct</code> e <code>DigitalProduct</code> para que elas incluam a funcionalidade implementada no módulo <code>DiscountEligible</code>.</p></li>
+</ol>
+
+<h3>Testando seu código</h3>
+
+<p>Você pode testar o seu código usando as mesmas duas formas que utilizou no <a href="m04-e01.html" target="_blank">exercício anterior</a>.</p>
+
+<h3>Correção e submissão do exercício</h3>
+
+<ul>
+<li><p>Quando você estiver satisfeito com a sua resposta, utilize a ferramenta <code>ep-cli</code> para executar a correção do exercício (comando <code>corrigir</code>).</p></li>
+<li><p>Quando você tiver finalizado o exercício, utilize a ferramenta <code>ep-cli</code> para enviar o resultado (comando <code>enviar</code>).</p></li>
+<li><p><strong>Atualização do seu GitHub:</strong> atualize o diretório <code>oop/simples_store</code> do seu repositório <code>studies</code> com as modificações desse exercício.</p></li>
+</ul>
+
+    </div>
+  </body>
+</html>

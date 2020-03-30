@@ -1,0 +1,962 @@
+pt-BR:
+
+  cli:
+    program_desc: 'Ferramenta para a correção automática e submissão de exercícios'
+
+    global_options:
+      help:
+        desc: 'Exibe esta mensagem'
+        opt: 'ajuda'
+      debug:
+        desc: 'Define o nível de verbosidade. Opções: [ %{levels} ]'
+        arg: 'nível'
+        opt: 'debug'
+
+    cmds:
+      echo_student_code:
+        name: 'mostrar-codigo-aluno'
+        desc: 'Imprime o código de aluno que está configurado'
+
+      grade:
+        name: 'corrigir'
+        desc: 'Executa o corretor para um determinado exercício'
+        arg: 'exercício'
+
+        opts:
+          hints:
+            desc: 'Exibir dicas'
+            opt: 'dicas'
+
+          dir:
+            desc: 'Diretório da solução'
+            opt: 'dir'
+            arg: 'path'
+            default: 'diretório atual'
+
+      submit:
+        name: 'enviar'
+        desc: 'Envia o resultado de um corretor para a plataforma do curso'
+        arg: 'exercício'
+
+        msg_1: 'Resumo da correção'
+        msg_2: 'Exercício %{m}.%{e}, corrigido em: %{at}'
+        msg_3: '%{pass_count} acertos, %{fail_count} falhas, %{skip_count} não executados'
+        msg_4: 'Enviando...'
+
+
+      configure:
+        name: 'configurar'
+        desc: 'Cria arquivos de configuração desta ferramenta'
+
+        opts:
+          student_code:
+            desc: 'Código do aluno'
+            arg: 'codigo'
+            opt: 'codigo_aluno'
+
+          force:
+            desc: 'Apaga e cria novamente os arquivos de configuração, caso já existam'
+            opt: 'forçar'
+
+      download:
+        name: 'download'
+        desc: 'Faz o download de um arquivo usado para os exercícios'
+        arg: 'arquivo'
+
+
+      show_exercise:
+        name: 'enunciado'
+        desc: 'Exibe o enunciado de um exercício'
+        arg: 'exercício'
+
+    errors:
+      prefix: 'erro'
+      configuration_exists: 'Arquivos de configuração já existem. Para apagá-los e configurar novamente, utilize a opção --%{force_opt}'
+      configuration_missing: "É necessário configurar o programa antes de corrigir ou enviar arquivos. Utilize o comando 'configurar' para fazer isso."
+      debug_level_invalid: 'Valor "%{level}" inválido em "--%{debug_opt}=%{level}"'
+      exercise_invalid: "Exercício inválido: '%{ex}'. O exercício deve ser especificado no formato {módulo}.{exercício}, por exemplo: 3.2"
+      exercise_missing: 'Nenhum exercício especificado'
+      exercise_not_graded: 'O exercício %{m}.%{e} ainda não foi corrigido. Utilize o comando %{grade_cmd} para executar a correção automática e tente novamente'
+      grader_not_found: 'Não foi encontrado nenhum corretor para o exercício %{m}.%{e}'
+      os_unsupported: 'Sistema operacional não suportado.'
+      question_file_not_found: 'Não foi encontrado enunciado para o exercício %{m}.%{e}'
+      student_code_missing: 'Informe o código do aluno'
+      student_not_found: 'A configuração não foi concluída. Certifique-se que seu código está correto. Entre em contato com um instrutor caso o problema persista.'
+      too_many_exercises: 'Múltiplos exercícios especificados (%{exs}). Especifique apenas um exercício por vez'
+      work_dir_not_found: 'Diretório não encontrado: %{work_dir}'
+      invalid_student_code: 'Código de aluno inválido: %{student_code}'
+
+      download:
+        file_not_found: 'Arquivo não encontrado. Certifique-se de que o caminho foi informado corretamente'
+
+    debug_1:
+      work_dir: "[debug-1] Diretório de trabalho: %{work_dir}"
+
+  config:
+    files_created: 'Arquivos de configuração criados em: %{path}'
+
+  graders:
+
+    base:
+      summary:
+        exercise: 'Exercício: %{ex}'
+        footer: 'Correção concluída. %{p} acertos, %{f} erros, %{s} não executados'
+
+    M01:
+      default_m1: &default_m1
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+
+        check_solution_file_executable:
+          pass: 'Arquivo de solução é executável'
+          fail: 'Arquivo de solução do exercício não é executável: %{f}'
+          hint: "O comando 'chmod' pode ser usado para alterar as permissões de execução de um arquivo"
+
+      E01:
+        <<: *default_m1
+        check_raiz_directory_exists:
+          pass: 'O diretório "dir_1" existe'
+          fail: 'O diretório "dir_1" não existe em: %{f}'
+          hint: "O comando 'mkdir' pode ser usado para criar diretórios"
+
+        check_treinamento_estagio_programacao_directory_exists:
+          pass: 'O diretório treinamento_estagio_programacao existe'
+          fail: 'O diretório treinamento_estagio_programacao não existe: %{f}'
+          hint: "O comando 'mkdir' pode ser usado para criar diretórios"
+
+        check_tep_file_exists:
+          pass: 'O arquivo "tep" existe'
+          fail: 'O arquivo "tep" não existe em: %{f}'
+          hint: "O comando 'ln -s' pode ser usado para criar um link simbólico de um diretório para outro"
+
+        check_tep_is_symlink:
+          pass: 'O arquivo tep é um link simbólico'
+          fail: 'O arquivo tep não é um link simbólico: %{f}'
+          hint: "O comando 'ln -s' pode ser usado para criar um link simbólico de um diretório para outro"
+
+        check_tep_points_treinamento_estagio_programacao:
+          pass: 'O diretório tep é um link para o diretório treinamento_estagio_programacao'
+          fail: 'O diretório tep não aponta para o diretório treinamento_estagio_programacao: %{f}'
+          hint: "Certifique-se de passar os diretórios de origem e destino como argumentos para o comando 'ln'"
+
+        check_fernando_directory_exists:
+          pass: 'O diretório fernando existe'
+          fail: 'O diretório fernando não existe: %{f}'
+          hint: "O comando 'mkdir' pode ser usado para criar diretórios"
+
+        check_fer_file_exists:
+          pass: 'O arquivo fer existe'
+          fail: 'O arquivo fer não existe: %{f}'
+          hint: "O comando 'ln -s' pode ser usado para criar um link simbólico de um diretório para outro"
+
+        check_fer_is_symlink:
+          pass: 'O arquivo fer é um link simbólico'
+          fail: 'O arquivo fer não é um link simbólico: %{f}'
+          hint: "O comando 'ln -s' pode ser usado para criar um link simbólico de um diretório para outro"
+
+        check_fer_points_fernando:
+          pass: 'O arquivo fer é um link para o diretório fernando'
+          fail: 'O arquivo fer não aponta para o diretório fernando: %{f}'
+          hint: "Certifique-se de passar os caminhos corretos de origem e destino como argumentos para o comando 'ln'"
+
+        check_vazio_file_exists:
+          pass: 'O arquivo notas.txt existe'
+          fail: 'O arquivo notas.txt não existe'
+          hint: "Verifique se o caminho do arquivo está correto e o comando 'touch' pode ser usado para criar um arquivo vazio"
+      E02:
+        <<: *default_m1
+        check_answer_format:
+          pass: 'A saída do script obedece ao formato do enunciado'
+          fail: "A saída do script não obedece ao formato do enunciado. Saída obtida:\n\"\n%{out}\n\""
+          hint: "O comando 'echo' pode ser utilizado para imprimir uma linha de texto na tela"
+
+        check_capitalcase_occurrencies_count:
+          pass: "A contagem de ocorrências do termo 'Linux' está correta"
+          fail: "A contagem de ocorrências do termo 'Linux' está incorreta. Esperado: %{expected}. Obtido: %{actual}"
+          hint: |-
+            1) Não se esqueça de que, se duas ou mais ocorrências aparecerem na mesma linha, você deve contar *todas* as ocorrências, e não uma só.
+                2) O comando "wc -l" conta as linhas de sua entrada e imprime o resultado na saída. Por exemplo, "cat texto.txt | wc -l" imprime o número de linhas do arquivo texto.txt.
+                3) Você pode imprimir um valor dinâmico com o comando echo usando o $() para executar um comando qualquer e imprimir sua saída. Por exemplo, o trecho 'echo "Meu usuário é: $(whoami)"' imprime o seu nome de usuário.
+
+        check_lowercase_occurrencies_count:
+          pass: "O número de ocorrências do termo 'linux' está correto"
+          fail: "A contagem de ocorrências do termo 'linux' está incorreta"
+          hint: |-
+            1) Não se esqueça de que, se duas ou mais ocorrências aparecerem na mesma linha, você deve contar *todas* as ocorrências, e não uma só.
+                2) O comando "wc -l" conta as linhas de sua entrada e imprime o resultado na saída. Por exemplo, "cat texto.txt | wc -l" imprime o número de linhas do arquivo texto.txt.
+                3) Você pode imprimir um valor dinâmico com o comando echo usando o $() para executar um comando qualquer e imprimir sua saída. Por exemplo, o trecho 'echo "Meu usuário é: $(whoami)"' imprime o seu nome de usuário.
+
+        check_insensitive_occurrencies_count:
+          pass: 'O número de ocorrências do termo linux case-insensitive está correto'
+          fail: 'A contagem de ocorrências do termo linux case-insensitive stá incorreta'
+          hint: "O comando 'grep' possui uma opção que ignora diferença entre maiúsculas e minúsculas"
+
+      E03:
+        <<: *default_m1
+        check_answer_ibm_format:
+          pass: 'O formato da resposta está correto'
+          fail: 'O formato da resposta deve ser conforme descrito no enunciado'
+          notice: "Rodando: m1-e3.sh 'https://en.wikipedia.org/wiki/Unix' ibm"
+          hint: "O formato esperado deve ser relativo ao segundo parâmetro do script"
+
+        check_ibm_occurrencies_count:
+          pass: "O número de ocorrências do termo 'ibm' está correto"
+          fail: "A contagem de ocorrências do termo 'ibm' está incorreta"
+          hint: "Os comando 'grep' e 'wc' podem ser utilizados com opções para fazer a contagem"
+
+        check_answer_kernel_format:
+          pass: 'O formato da resposta está correto'
+          fail: 'O formato da resposta deve ser conforme descrito no enunciado'
+          notice: "Rodando: m1-e3.sh 'https://en.wikiquote.org/wiki/Linus_Torvalds' kernel"
+          hint: "O formato esperado deve ser relativo ao segundo parâmetro do script"
+
+        check_kernel_occurrencies_count:
+          pass: "O número de ocorrências do termo 'kernel' está correto"
+          fail: "A contagem de ocorrências do termo 'kernel' está incorreta"
+          hint: "Os comando 'grep' e 'wc' podem ser utilizados com opções para fazer a contagem"
+
+      E04:
+        check_description: &check_description
+          pass: 'O comando %{cmd} foi descrito'
+          fail: 'O comando %{cmd} não foi descrito'
+          hint: "Utilize a estrutura de controle de fluxo 'case ... esac' para escolher entre os comandos descritos."
+
+        <<: *default_m1
+        check_cd_description:
+          <<: *check_description
+
+        check_ls_description:
+          <<: *check_description
+
+        check_pwd_description:
+          <<: *check_description
+
+        check_cat_description:
+          <<: *check_description
+
+        check_rm_description:
+          <<: *check_description
+
+        check_mv_description:
+          <<: *check_description
+
+        check_chmod_description:
+          <<: *check_description
+
+        check_man_description:
+          <<: *check_description
+
+        check_touch_description:
+          <<: *check_description
+
+        check_grep_description:
+          <<: *check_description
+      E05:
+        <<: *default_m1
+
+        check_correct_answer:
+          pass: 'A resposta está correta.'
+          fail: 'A resposta está incorreta.'
+          hint: 'Escreva apenas a resposta ao problema no arquivo m1-05.txt'
+
+    M02:
+      E01:
+        check_repo_directory_exists:
+          pass: 'O diretório "ep-m2-repo" existe.'
+          fail: 'O diretório "ep-m2-repo" não existe.'
+          hint: 'Clone o repositório do GitHub para um diretório chamado "ep-m2-repo".'
+        check_dir_is_a_git_repo:
+          pass: 'O diretório "ep-m2-repo" é um repositório Git.'
+          fail: 'O diretório "ep-m2-repo" não é um repositório Git.'
+          hint: 'Certifique-se de que existe o diretório oculto ".git" dentro do diretório do repositório.'
+        check_repo_has_github_remote:
+          pass: 'Existe um remote apontando para o GitHub'
+          fail: 'Não existe um remote apontando para o GitHub'
+          hint: 'Verifique se o remote do GitHub consta no arquivo ".git/config"'
+
+      E02:
+        check_global_git_user_name_is_set:
+          pass: 'O nome do usuário global do Git está correto.'
+          fail: 'O nome do usuário global do Git não deveria ser: "%{str}".'
+          hint: 'Altere o nome de usuário global do Git.'
+        check_global_git_user_email_is_set:
+          pass: 'O email do usuário global do Git está correto.'
+          fail: 'O email do usuário global do Git não deveria ser: "%{str}".'
+          hint: 'Altere o email do usuário global do Git.'
+        check_local_git_user_name_is_set:
+          pass: 'O nome do usuário específico do repositório está correto.'
+          fail: 'O nome do usuário específico do repositório não deveria ser: "%{str}".'
+          hint: 'Altere o nome de usuário específico do repositório.'
+        check_local_git_email_is_set:
+          pass: 'O email do usuário específico do repositório está correto.'
+          fail: 'O email do usuário específico do repositório não deveria ser: "%{str}".'
+          hint: 'Altere o email do usuário específico do repositório.'
+
+      E03:
+        check_repo_is_not_empty:
+          pass: 'O repositório local tem pelo menos um commit.'
+          fail: 'O repositório local não tem commits.'
+          hint: 'Crie um commit no repositório local.'
+        check_first_commit_adds_a_txt:
+          pass: 'O primeiro commit adiciona somente o arquivo "a.txt".'
+          fail: 'O primeiro commit não adiciona exclusivamente  o arquivo "a.txt".'
+          hint: 'O primeiro commit deve apenas adicionar o arquivo "a.txt".'
+        check_first_commit_has_correct_message:
+          pass: 'O primeiro commit possui a mensagem correta.'
+          fail: 'O primeiro commit não possui a mensagem correta.'
+          hint: 'Verifique a mensagem do primeiro commit.'
+        check_second_commit_adds_b_txt:
+          pass: 'O segundo commit adiciona somente o arquivo "b.txt".'
+          fail: 'O segundo commit não adiciona exclusivamente o arquivo "b.txt".'
+          hint: 'O segundo commit deve apenas adicionar o arquivo "b.txt".'
+        check_second_commit_has_correct_message:
+          pass: 'O segundo commit possui a mensagem correta.'
+          fail: 'O segundo commit não possui a mensagem correta.'
+          hint: 'Verifique a mensagem do segundo commit.'
+        check_third_commit_removes_b_txt:
+          pass: 'O terceiro commit remove somente o arquivo "b.txt".'
+          fail: 'O terceiro commit não remove exclusivamente  o arquivo "b.txt".'
+          hint: 'O terceiro commit deve apenas somente o arquivo "b.txt".'
+        check_third_commit_has_correct_message:
+          pass: 'O terceiro commit possui a mensagem correta.'
+          fail: 'O terceiro commit não possui a mensagem correta.'
+          hint: 'Verifique a mensagem do terceiro commit.'
+        check_remote_master_exists:
+          pass: 'A branch "origin/master" existe.'
+          fail: 'A branch "origin/master" não existe.'
+          hint: 'Verifique no GitHub se a branch "master" existe e se o remote do GitHub tem o nome de "origin".'
+        check_push_to_remote_master:
+          pass: 'A branch "origin/master" está sincronizada com a branch "master".'
+          fail: 'A branch "origin/master" não está sincronizada com a branch "master".'
+          hint: 'Verifique se as branches "master" e "origin/master" apontam para o mesmo commit.'
+
+      E04:
+        check_release_branch_exists:
+          pass: 'A branch "release" existe no repositório local.'
+          fail: 'A branch "release" não existe no repositório local.'
+          hint: 'A partir da branch "master", crie uma branch com o nome "release".'
+        check_remote_release_branch_exists:
+          pass: 'A branch "release" existe no repositório remoto (GitHub).'
+          fail: 'A branch "release" não existe no repositório remoto (GitHub).'
+          hint: 'Faça o push da sua branch "release" local para o repositório remoto (GitHub).'
+
+    M03:
+      default_m3: &default_m3
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+        check_function_definition: &check_function_definition
+          pass: 'A função %{method} existe'
+          fail: 'A função %{method} não existe'
+          hint: 'Certifique-se de definir a função utilizando a palavra chave "def"'
+        check_assert_equal:
+          pass: 'Valor (%{value}) é o esperado na linha %{line}'
+          fail: 'Valor (%{value}) não é o esperado na linha %{line}'
+          hint: 'Confira o valor informado. Tente executar a expressão no IRB para ter certeza do valor retornado.'
+      E01:
+        <<: *default_m3
+
+      E02:
+        <<: *default_m3
+
+      E03:
+        <<: *default_m3
+
+      E04:
+        <<: *default_m3
+
+        check_function_definition_factorial:
+          <<: *check_function_definition
+
+        check_function_definition_reverse:
+          <<: *check_function_definition
+
+        check_function_definition_sort:
+          <<: *check_function_definition
+
+        check_function_definition_upcase:
+          <<: *check_function_definition
+
+        check_factorial: &check_factorial
+          pass: 'O resultado de %{n}! está correto'
+          fail: 'O resultado de %{n}! está incorreto'
+          hint: 'Confira o valor calculado. Leia a definição de fatorial para ter certeza que sua função está calculando corretamente.'
+
+        check_factorial_0:
+          <<: *check_factorial
+        check_factorial_1:
+          <<: *check_factorial
+        check_factorial_2:
+          <<: *check_factorial
+        check_factorial_5:
+          <<: *check_factorial
+        check_factorial_10:
+          <<: *check_factorial
+
+        check_reverse: &check_reverse
+          pass: 'O reverso de %{str} está correto'
+          fail: 'O reverso de %{str} está incorreto'
+          hint: 'Confira a string retornada. O método split pode ser usado em uma string para transformá-la em um array de caracteres'
+
+        check_reverse_a:
+          <<: *check_reverse
+        check_reverse_ab:
+          <<: *check_reverse
+        check_reverse_abcdefghijklmnopqrstuvwxyz:
+          <<: *check_reverse
+
+        check_sort: &check_sort
+          pass: 'O array %{arr} foi ordenado corretamente'
+          fail: 'O array %{arr} não foi ordenado corretamente'
+          hint: 'Confira se o seu algoritmo está ordenando o array corretamente.'
+
+        check_sort_empty:
+          <<: *check_sort
+        check_sort_1:
+          <<: *check_sort
+        check_sort_1_2:
+          <<: *check_sort
+        check_sort_2_1:
+          <<: *check_sort
+        check_sort_big_array:
+          <<: *check_sort
+
+        check_upcase: &check_upcase
+          pass: 'A string "%{str}" foi convertida corretamente'
+          fail: 'A string "%{str}" não foi convertida corretamente'
+          hint: 'Utilize a tabela ASSCI para caracters'
+
+        check_upcase_empty:
+          <<: *check_upcase
+        check_upcase_a:
+          <<: *check_upcase
+        check_upcase_ab:
+          <<: *check_upcase
+        check_upcase_ab_cd:
+          <<: *check_upcase
+        check_upcase_abc_def:
+          <<: *check_upcase
+        check_upcase_abcdefghijklmnopqrstuvwxyz:
+          <<: *check_upcase
+    M04:
+      E01:
+        check_product_file_exists:
+          pass: 'O arquivo product.rb existe e está no diretório correto'
+          fail: 'O arquivo %{f} não existe'
+          hint: 'Crie o arquivo product.rb no diretório "lib" do simple_store'
+        check_product_klass_declaration:
+          pass: 'A classe Product foi declarada'
+          fail: 'A classe Product não foi declarada'
+          hint: "A palavra chave 'class' pode ser usada para criar uma classe ou modificar uma já existente"
+        check_valid_params:
+          pass: 'Foi possível criar um produto de teste usando Product.new'
+          fail: "Não foi possível criar um produto usando valores válidos.\n\t%{msg}\n\n\tParâmetros utilizados: %{params}"
+          hint: 'Crie o método initialize para a classe Product. O método deve receber um parâmetro.'
+        check_instance_variables:
+          pass: 'A variável de instância %{var} existe'
+          fail: 'A variável de instância %{var} não existe'
+          hint: 'Atribua o valor de uma variável de instância chamando um método setter no `initialize`'
+        check_instance_variables_values:
+          pass: 'O valor da variável de instância @%{var} foi atribuído corretamente.'
+          fail: 'O valor da variável de instância @%{var} não foi atribuído corretamente. Esperado: %{expected}. Recebido: %{actual}.'
+          hint: 'Verifique se o hash passado como parâmetro está sendo acessado corretamente.'
+        check_manufacturer_instance_var_value:
+          pass: 'O valor da variável de instância @manufacturer foi atribuído corretamente.'
+          fail: 'O valor da variável de instância @manufacturer não foi atribuído corretamente. Esperado: %{expected}. Recebido: %{actual}.'
+          hint: "Utilize a chave 'manufacturer_code' do hash e a constante SimpleStore::AUTHORIZED_MANUFACTURERS para encontrar o nome do fabricante."
+        check_code_instance_var_value:
+          pass: 'O valor da variável de instância @code foi atribuído corretamente.'
+          fail: 'O valor da variável de instância @code não foi atribuído corretamente. Esperado: %{expected}. Recebido: %{actual}.'
+          hint: "Defina o método privado `generate_control_code` para gerar o código único do produto."
+        check_readers:
+          pass: 'O getter para a variável @%{var} existe'
+          fail: 'O getter para a variável @%{var} não existe'
+          hint: 'Utilize os helpers attr_* do Ruby para declarar getters e setters'
+        check_writers:
+          pass: 'O setter para a variável @%{var} existe'
+          fail: 'O setter para a variável @%{var} não existe'
+          hint: 'Declare um método setter (seguindo as convenções de nomenclatura para setters em Ruby) para atribuir um valor para uma variável de instância com as validações necessárias.'
+        check_product_title_assignment:
+          pass: 'O produto foi criado com o título correto'
+          fail: 'O título do produto não foi atribuído corretamente. %{more_info}'
+          hint: 'Utilize uma validação no método construtor da classe de maneira que o título não possa ser vazio'
+        check_product_price_assignment:
+          pass: 'O produto foi criado com o preço correto'
+          fail: 'O produto foi criado com o preço incorreto. %{more_info}'
+          hint: 'Utilize uma validação no método construtor da classe de maneira que o preço não possa ser < 0 ou nulo'
+        check_product_barcode_assignment:
+          pass: 'O produto foi criado com o código de barras correto'
+          fail: 'O produto foi criado com o código de barras incorreto. %{more_info}'
+          hint: 'Utilize o valor passado no hash do método construtor para atribuir o valor ao atributo da classe "barcode"'
+        check_product_manufacturer_assignment:
+          pass: 'O produto foi criado com o fabricante correto'
+          fail: 'O produto foi criado com o fabricante incorreto. %{more_info}'
+          hint: 'Utilize uma validação no método construtor da classe de maneira que o fabricante esteja na lista da constante SimpleStore::AUTHORIZED_MANUFACTURERS'
+        check_generate_control_code_exists:
+          pass: 'Método privado generate_control_code existe'
+          fail: 'Método `generate_control_code` não existe ou não é privado'
+          hint: ''
+        check_correct_product_code:
+          pass: 'O código do produto foi criado corretamente'
+          fail: 'O código do produto não foi criado corretamente. %{more_info}'
+          hint: 'Declare um método privado (utilize a palavra reservada "private") chamado generate_control_code que gera o código conforme especificado no enunciado'
+        check_invalid_title:
+          pass: 'O caso de produto com título inválido foi tratado corretamente'
+          fail: 'O caso de produto com título inválido não foi tratado corretamente. %{more_info}'
+          hint: "Utilize o código: `fail SimpleStore::Error, 'O título do produto não pode ser vazio'` para este erro de validação"
+        check_price_nil:
+          pass: 'O caso de produto com preço nulo foi tratado corretamente'
+          fail: 'O caso de produto com preço nulo não foi tratado corretamente. %{more_info}'
+          hint: "Utilize o código: `fail SimpleStore::Error, 'O preço do produto deve ser >= 0.0'` para este erro de validação"
+        check_price_negative:
+          pass: 'O caso de produto com preço negativo foi tratado corretamente'
+          fail: 'O caso de produto com preço negativo não foi tratado corretamente. %{more_info}'
+          hint: "Utilize o código: `fail SimpleStore::Error, 'O preço do produto deve ser >= 0.0'` para este erro de validação"
+        check_invalid_manufacturer:
+          pass: 'O caso de produto com fabricante inválido foi tratado corretamente'
+          fail: 'O caso de produto com fabricante inválido não foi tratado corretamente. %{more_info}'
+          hint: "Utilize o código: `fail SimpleStore::Error, 'O fabricante não está autorizado'` para este erro de validação"
+      E02:
+        check_physical_product_file_exists:
+          pass: 'O arquivo physical_product.rb existe e está no diretório correto'
+          fail: 'O arquivo %{f} não existe'
+          hint: 'Crie o arquivo physical_product.rb no diretório simple_store/lib/products'
+        check_physical_product_klass_declaration:
+          pass: 'A classe PhysicalProduct foi declarada'
+          fail: 'A classe PhysicalProduct não foi declarada'
+          hint: A palavra chave 'class' pode ser utilizada para criar uma classe ou modificar uma já existente.
+        check_physical_product_inherits_product:
+          pass: 'A classe PhysicalProduct herda da classe Product'
+          fail: 'A classe PhysicalProduct não herda da classe Product'
+          hint: 'Altere a declaração da classe PhysicalProduct de forma que ela herde da classe Product'
+        check_fresh_product_file_exists:
+          pass: 'O arquivo fresh_product.rb exite e está no diretório correto'
+          fail: 'O arquivo %{f} não existe'
+          hint: 'Crie o arquivo fresh_product.rb no diretório simple_store/lib/products'
+        check_fresh_product_klass_declaration:
+          pass: 'A classe FreshProduct foi declarada'
+          fail: 'A classe FreshProduct não foi declarada'
+          hint: A palavra chave 'class' pode ser utilizada para criar uma classe ou modificar uma já existente.
+        check_fresh_product_inherits_product:
+          pass: 'A classe FreshProduct herda da classe Product'
+          fail: 'A classe FreshProduct não herda da classe Product'
+          hint: 'Altere a declaração da classe FreshProduct de forma que ela herde da classe Product'
+        check_digital_product_file_exists:
+          pass: 'O arquivo digital_product.rb exite e está no diretório correto'
+          fail: 'O arquivo %{f} não existe'
+          hint: 'Crie o arquivo digital_product.rb no diretório simple_store/lib/products'
+        check_digital_product_klass_declaration:
+          pass: 'A classe DigitalProduct foi declarada'
+          fail: 'A classe DigitalProduct não foi declarada'
+          hint: A palavra chave 'class' pode ser utilizada para criar uma classe ou modificar uma já existente.
+        check_digital_product_inherits_product:
+          pass: 'A classe DigitalProduct herda da classe Product'
+          fail: 'A classe DigitalProduct não herda da classe Product'
+          hint: 'Altere a declaração da classe DigitalProduct de forma que ela herde da classe Product'
+        check_valid_physical_params:
+          pass: '(PhysicalProduct) O produto de teste foi criado'
+          fail: '(PhysicalProduct) O produto não pode ser criado resultando no erro: %{msg}'
+          hint: '(PhysicalProduct) Crie o construtor da classe Product com a definição do método initialize. Garanta que o método valide os parametros corretamene'
+        check_physical_product_title_assignment:
+          pass: '(PhysicalProduct) O produto foi criado com o título correto'
+          fail: '(PhysicalProduct) O produto foi criado com o título incorreto'
+          hint: '(PhysicalProduct) Utilize uma validação no método construtor da classe de maneira que o título não possa ser vazio'
+        check_physical_product_price_assignment:
+          pass: '(PhysicalProduct) O produto foi criado com o preço correto'
+          fail: '(PhysicalProduct) O produto foi criado com o preço incorreto'
+          hint: '(PhysicalProduct) Utilize uma validação no método construtor da classe de maneira que o preço não possa ser < 0 ou nulo'
+        check_physical_product_barcode_assignment:
+          pass: '(PhysicalProduct) O produto foi criado com o código de barras correto'
+          fail: '(PhysicalProduct) O produto foi criado com o código de barras incorreto'
+          hint: '(PhysicalProduct) Verifique se o método `initialize` da classe-pai está sendo chamado corretamente.'
+        check_physical_product_manufacturer_assignment:
+          pass: '(PhysicalProduct) O produto foi criado com o fabricante correto'
+          fail: '(PhysicalProduct) O produto foi criado com o fabricante incorreto'
+          hint: '(PhysicalProduct) Utilize uma validação no método construtor da classe de maneira que o fabricante esteja na lista da constante SimpleStore::AUTHORIZED_MANUFACTURERS'
+        check_correct_physical_product_code:
+          pass: '(PhysicalProduct) O código do produto foi criado corretamente'
+          fail: '(PhysicalProduct) O código do produto não foi criado corretamente. Esperado: %{expected}. Recebido: %{actual}'
+          hint: '(PhysicalProduct) Verifique a implementação do método `generate_control_code`, que gera o código do produto conforme especificado no enunciado'
+        check_invalid_physical_title:
+          pass: '(PhysicalProduct) A mensagem de erro para o título inválido foi gerada corretamente'
+          fail: '(PhysicalProduct) A mensagem de erro para o título inválido foi gerada incorretamente'
+          hint: '(PhysicalProduct) Utilize o código: fail SimpleStore::Error, "O título do produto não pode ser vazio" para retornar erro ao criar o produto'
+        check_physical_price_nil:
+          pass: '(PhysicalProduct) A mensagem de erro para o preço nulo foi gerada corretamente'
+          fail: '(PhysicalProduct) A mensagem de erro para o preço nulo foi gerada incorretamente'
+          hint: '(PhysicalProduct) Utilize o código: fail SimpleStore::Error, "O preço do produto deve ser >= 0.0" para retornar erro ao criar o produto'
+        check_physical_price_negative:
+          pass: '(PhysicalProduct) A mensagem de erro para o preço negativo foi gerada corretamente'
+          fail: '(PhysicalProduct) A mensagem de erro para o preço negativo foi gerada incorretamente'
+          hint: '(PhysicalProduct) Utilize o código: fail SimpleStore::Error, "O preço do produto deve ser >= 0.0" para retornar erro ao criar o produto'
+        check_invalid_physical_manufacturer:
+          pass: '(PhysicalProduct) A mensagem de erro para fabricante inválido foi gerada corretamente'
+          fail: '(PhysicalProduct) A mensagem de erro para fabricante inválido foi gerada incorretamente'
+          hint: '(PhysicalProduct) Utilize o código: fail SimpleStore::Error, "O fabricante não está autorizado" para retornar erro ao criar o produto'
+        check_valid_fresh_params:
+          pass: '(FreshProduct) O produto de teste foi criado'
+          fail: '(FreshProduct) O produto não pode ser criado resultando no erro: %{msg}'
+          hint: '(FreshProduct) Crie o construtor da classe Product com a definição do método initialize. Garanta que o método valide os parametros corretamene'
+        check_fresh_product_title_assignment:
+          pass: '(FreshProduct) O produto foi criado com o título correto'
+          fail: '(FreshProduct) O produto foi criado com o título incorreto. Esperado: %{expected}. Recebido: %{actual}.'
+          hint: '(FreshProduct) Verifique se o construtor da classe-pai está sendo chamado corretamente.'
+        check_fresh_product_price_assignment:
+          pass: '(FreshProduct) O produto foi criado com o preço correto'
+          fail: '(FreshProduct) O produto foi criado com o preço incorreto'
+          hint: '(FreshProduct) Verifique se o construtor da classe-pai está sendo chamado corretamente.'
+        check_fresh_product_barcode_assignment:
+          pass: '(FreshProduct) O produto foi criado com o código de barras correto'
+          fail: '(FreshProduct) O produto foi criado com o código de barras incorreto'
+          hint: '(FreshProduct) Verifique se o construtor da classe-pai está sendo chamado corretamente.'
+        check_fresh_product_expiration_date_setter:
+          pass: '(FreshProduct) O setter para `expiration_date` existe'
+          fail: '(FreshProduct) O setter para `expiration_date` não existe'
+          hint: 'Declare um setter para `expiration_date`'
+        check_fresh_product_expiration_date_assignment:
+          pass: '(FreshProduct) O produto foi criado com a data de validade correta'
+          fail: '(FreshProduct) O produto foi criado com a data de validade incorreta. %{more_info}'
+          hint: '(FreshProduct) Verifique se o hash passado como parâmetro para o método `initialize` está sendo acessado corretamente.'
+        check_fresh_product_manufacturer_assignment:
+          pass: '(FreshProduct) O produto foi criado com o fabricante correto'
+          fail: '(FreshProduct) O produto foi criado com o fabricante incorreto'
+          hint: '(FreshProduct) Utilize uma validação no método construtor da classe de maneira que o fabricante esteja na lista da constante SimpleStore::AUTHORIZED_MANUFACTURERS'
+        check_correct_fresh_product_code:
+          pass: '(FreshProduct) O código do produto foi criado corretamente'
+          fail: '(FreshProduct) O código do produto não foi criado corretamente. Esperado: %{expected}. Recebido: %{actual}'
+          hint: '(FreshProduct) Verifique a implementação do método `generate_control_code`, que gera o código do produto conforme especificado no enunciado'
+        check_invalid_fresh_title:
+          pass: '(FreshProduct) A mensagem de erro para o título inválido foi gerada corretamente'
+          fail: '(FreshProduct) A mensagem de erro para o título inválido foi gerada incorretamente'
+          hint: '(FreshProduct) Utilize o código: fail SimpleStore::Error, "O título do produto não pode ser vazio" para retornar erro ao criar o produto'
+        check_fresh_price_nil:
+          pass: '(FreshProduct) A mensagem de erro para o preço nulo foi gerada corretamente'
+          fail: '(FreshProduct) A mensagem de erro para o preço nulo foi gerada incorretamente'
+          hint: '(FreshProduct) Utilize o código: fail SimpleStore::Error, "O preço do produto deve ser >= 0.0" para retornar erro ao criar o produto'
+        check_fresh_price_negative:
+          pass: '(FreshProduct) A mensagem de erro para o preço negativo foi gerada corretamente'
+          fail: '(FreshProduct) A mensagem de erro para o preço negativo foi gerada incorretamente'
+          hint: '(FreshProduct) Utilize o código: fail SimpleStore::Error, "O preço do produto deve ser >= 0.0" para retornar erro ao criar o produto'
+        check_invalid_fresh_manufacturer:
+          pass: '(FreshProduct) A mensagem de erro para fabricante inválido foi gerada corretamente'
+          fail: '(FreshProduct) A mensagem de erro para fabricante inválido foi gerada incorretamente'
+          hint: '(FreshProduct) Utilize o código: fail SimpleStore::Error, "O fabricante não está autorizado" para retornar erro ao criar o produto'
+        check_nil_fresh_expiration_date:
+          pass: '(FreshProduct) A mensagem de erro para data de validade nula foi gerada corretamente'
+          fail: '(FreshProduct) A mensagem de erro para data de validade nula foi gerada incorretamente'
+          hint: '(FreshProduct) Utilize o código: fail SimpleStore::Error, "O produto não pode estar vencido" para retornar erro ao criar o produto'
+        check_fresh_expirated:
+          pass: '(FreshProduct) A mensagem de erro para produto vencido foi gerada corretamente'
+          fail: '(FreshProduct) A mensagem de erro para produto vencido foi gerada incorretamente'
+          hint: '(FreshProduct) Utilize o código: fail SimpleStore::Error, "O produto não pode estar vencido" para retornar erro ao criar o produto'
+        check_valid_digital_params:
+          pass: '(DigitalProduct) O produto de teste foi criado'
+          fail: '(DigitalProduct) O produto não pode ser criado resultando no erro: %{msg}'
+          hint: '(DigitalProduct) Crie o construtor da classe Product com a definição do método initialize. Garanta que o método valide os parametros corretamene'
+        check_digital_product_title_assignment:
+          pass: '(DigitalProduct) O produto foi criado com o título correto'
+          fail: '(DigitalProduct) O produto foi criado com o título incorreto'
+          hint: '(FreshProduct) Verifique se o construtor da classe-pai está sendo chamado corretamente.'
+        check_digital_product_price_assignment:
+          pass: '(DigitalProduct) O produto foi criado com o preço correto'
+          fail: '(DigitalProduct) O produto foi criado com o preço incorreto'
+          hint: '(DigitalProduct) Utilize uma validação no método construtor da classe de maneira que o preço não possa ser < 0 ou nulo'
+        check_digital_product_barcode_assignment:
+          pass: '(DigitalProduct) O produto foi criado com o código de barras correto'
+          fail: '(DigitalProduct) O produto foi criado com o código de barras incorreto'
+          hint: '(FreshProduct) Verifique se o construtor da classe-pai está sendo chamado corretamente.'
+        check_digital_product_expiration_date_setter:
+          pass: '(DigitalProduct) O setter para `expiration_date` existe'
+          fail: '(DigitalProduct) O setter para `expiration_date` não existe'
+          hint: 'Declare um setter para `expiration_date`'
+        check_digital_product_expiration_date_assignment:
+          pass: '(DigitalProduct) O produto foi criado com a data de validade correta'
+          fail: '(DigitalProduct) O produto foi criado com a data de validade incorreta. %{more_info}'
+          hint: '(DigitalProduct) Verifique se o hash passado como parâmetro para o método `initialize` está sendo acessado corretamente'
+        check_digital_product_url_assignment:
+          pass: '(DigitalProduct) O produto foi criado com a URL correta'
+          fail: '(DigitalProduct) O produto foi criado com a URL incorreta. %{more_info}'
+          hint: '(DigitalProduct) Verifique se o hash passado como parâmetro para o método `initialize` está sendo acessado corretamente'
+        check_digital_product_manufacturer_assignment:
+          pass: '(DigitalProduct) O produto foi criado com o fabricante correto'
+          fail: '(DigitalProduct) O produto foi criado com o fabricante incorreto'
+          hint: '(DigitalProduct) Utilize uma validação no método construtor da classe de maneira que o fabricante esteja na lista da constante SimpleStore::AUTHORIZED_MANUFACTURERS'
+        check_correct_digital_product_code:
+          pass: '(DigitalProduct) O código do produto foi criado corretamente'
+          fail: '(DigitalProduct) O código do produto não foi criado corretamente. Esperado: %{expected}. Recebido: %{actual}'
+          hint: '(DigitalProduct) Verifique a implementação do método `generate_control_code`, que gera o código do produto conforme especificado no enunciado'
+        check_invalid_digital_title:
+          pass: '(DigitalProduct) A mensagem de erro para o título inválido foi gerada corretamente'
+          fail: '(DigitalProduct) A mensagem de erro para o título inválido foi gerada incorretamente. %{more_info}'
+          hint: '(DigitalProduct) Utilize o código: fail SimpleStore::Error, "O título do produto não pode ser vazio" para retornar erro ao criar o produto'
+        check_digital_price_nil:
+          pass: '(DigitalProduct) A mensagem de erro para o preço nulo foi gerada corretamente'
+          fail: '(DigitalProduct) A mensagem de erro para o preço nulo foi gerada incorretamente. %{more_info}'
+          hint: '(DigitalProduct) Utilize o código: fail SimpleStore::Error, "O preço do produto deve ser >= 0.0" para retornar erro ao criar o produto'
+        check_digital_price_negative:
+          pass: '(DigitalProduct) A mensagem de erro para o preço negativo foi gerada corretamente'
+          fail: '(DigitalProduct) A mensagem de erro para o preço negativo foi gerada incorretamente. %{more_info}'
+          hint: '(DigitalProduct) Utilize o código: fail SimpleStore::Error, "O preço do produto deve ser >= 0.0" para retornar erro ao criar o produto'
+        check_invalid_digital_manufacturer:
+          pass: '(DigitalProduct) A mensagem de erro para fabricante inválido foi gerada corretamente'
+          fail: '(DigitalProduct) A mensagem de erro para fabricante inválido foi gerada incorretamente. %{more_info}'
+          hint: '(DigitalProduct) Utilize o código: fail SimpleStore::Error, "O fabricante não está autorizado" para retornar erro ao criar o produto'
+        check_nil_digital_expiration_date:
+          pass: '(DigitalProduct) A mensagem de erro para data de validade nula foi gerada corretamente'
+          fail: '(DigitalProduct) A mensagem de erro para data de validade nula foi gerada incorretamente. %{more_info}'
+          hint: '(DigitalProduct) Utilize o código: fail SimpleStore::Error, "O produto não pode estar vencido" para retornar erro ao criar o produto'
+        check_digital_expirated:
+          pass: '(DigitalProduct) A mensagem de erro para produto vencido foi gerada corretamente'
+          fail: '(DigitalProduct) A mensagem de erro para produto vencido foi gerada incorretamente. %{more_info}'
+          hint: '(DigitalProduct) Utilize o código: fail SimpleStore::Error, "O produto não pode estar vencido" para retornar erro ao criar o produto'
+        check_digital_product_url_getter:
+          pass: '(DigitalProduct) O getter para `url` existe'
+          fail: '(DigitalProduct) O getter para `url` não existe'
+          hint: 'Declare um getter para `url`'
+        check_invalid_digital_url:
+          pass: '(DigitalProduct) A mensagem de erro para url inválida foi gerada corretamente'
+          fail: '(DigitalProduct) A mensagem de erro para url inválida foi gerada incorretamente. %{more_info}'
+          hint: '(DigitalProduct) Utilize o código: fail SimpleStore::Error, "A url do produto deve ser válida" para retornar erro ao criar o produto'
+      E03:
+        check_fresh_product_is_discount_eligible:
+          pass: 'A classe FreshProduct inclui a funcionalidade do módulo DiscountEligible'
+          fail: 'A classe FreshProduct não inclui a funcionalidade do módulo DiscountEligible'
+          hint: 'Não existem dicas para este teste'
+        check_digital_product_is_discount_eligible:
+          pass: 'A classe DigitalProduct inclui a funcionalidade do módulo DiscountEligible'
+          fail: 'A classe DigitalProduct não inclui a funcionalidade do módulo DiscountEligible'
+          hint: 'Não existem dicas para este teste'
+        check_days_to_expire:
+          pass: 'O método days_to_expire está implementado corretamente'
+          fail: 'O método days_to_expire não está implementado corretamente. %{more_info}'
+          hint: 'Não existem dicas para este teste'
+        check_discount_amount:
+          pass: 'O método check_discount_amount está implementado corretamente'
+          fail: 'O método check_discount_amount não está implementado corretamente. %{more_info}'
+          hint: 'Não existem dicas para este teste'
+        check_discounted_price:
+          pass: 'O método check_discounted_price está implementado corretamente'
+          fail: 'O método check_discounted_price não está implementado corretamente. %{more_info}'
+          hint: 'Não existem dicas para este teste'
+    M05:
+      default_m5_methods: &default_m5_methods
+        pass: 'O método %{method} está implementado corretamente'
+        fail: 'O método %{method} não está implementado corretamente'
+        hint: 'Certifique-se de que o método %{method} está definido e implementado de forma correta'
+
+      default_m5_methods_with_args: &default_m5_methods_with_args
+        pass: 'O método %{method} executou corretamente com a entrada "%{args}"'
+        fail: 'O método %{method} não executou corretamente com a entrada "%{args}"'
+        hint: 'Certifique-se de que o método %{method} implementado de forma correta'
+
+      default_m5: &default_m5
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+        check_exercise_class_is_defined:
+          pass: 'A classe da solução existe'
+          fail: 'A classe %{klass} não existe'
+          hint: 'Certifique-se de definir a classe corretamente'
+
+      E01:
+        <<: *default_m5
+
+        check_news_constant_is_correctly_defined:
+          pass: 'A constante %{constant} está corretamente definida'
+          fail: 'A constante %{constant} não está definida corretamente'
+          hint: 'Certifique-se de que a constante está definida E contém o conteúdo esperado'
+        check_format_news_method:
+          <<: *default_m5_methods
+        check_find_economy_dollar_news_method:
+          <<: *default_m5_methods
+        check_find_times_method:
+          <<: *default_m5_methods
+
+      E02:
+        <<: *default_m5
+
+        check_cpf_validation_method:
+          <<: *default_m5_methods_with_args
+        check_email_validation_method:
+          <<: *default_m5_methods_with_args
+        check_price_validation_method:
+          <<: *default_m5_methods_with_args
+        check_phone_validation_method:
+          <<: *default_m5_methods_with_args
+
+      E03:
+        <<: *default_m5
+
+        check_ddos_ip_is_correct:
+          pass: 'O IP identificado está correto'
+          fail: 'O IP identificado não está correto'
+          hint: 'Um dos IPs fez muito mais requisições do que os demais'
+        check_error_or_warning_count_is_correct:
+          pass: 'A contagem de requisições com status ALERTA ou ERRO está correta'
+          fail: 'A contagem de requisições com status ALERTA ou ERRO não está correta'
+          hint: ''
+        check_file_at_time:
+          pass: 'O arquivo da acessado na requisição feita em 21/07/2016 às 00:17:50 está correto'
+          fail: 'O arquivo da acessado na requisição feita em 21/07/2016 às 00:17:50 não está correto'
+          hint: ''
+        check_exception_at_time:
+          pass: 'A exceção gerada na requisição feita em 31/07/2016 às 06:11:20 está correta'
+          fail: 'A exceção gerada na requisição feita em 31/07/2016 às 06:11:20 não está correta'
+          hint: 'Colocar no arquivo de resposta somente a mensagem da exceção, sem os parênteses'
+
+    M06:
+      E01:
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+        check_q_about_query_method:
+          pass: 'Qual a classe do objeto retornado pelo método Mysql2::Client#query?'
+          fail: 'O método Mysql2::Client#query não retorna um objeto do tipo %{actual_class}'
+          hint: 'Use o método `class` para descobrir qual a classe de um objeto em Ruby'
+        check_q_how_many_tables:
+          pass: 'Quais são as tabelas que existem no banco de dados?'
+          fail: 'As tabelas que existem no banco de dados não são: %{actual_tables}'
+          hint: 'Experimente executar `SHOW tables;`'
+        check_q_title_data_type:
+          pass: 'Qual é o tipo da coluna `title` da tabela `products`?'
+          fail: 'O tipo da coluna `title` da tabela `products` não é: %{actual_type}'
+          hint: 'Experimente executar `SHOW columns FROM products;`'
+        check_q_categories_primary_key:
+          pass: 'Qual é a chave primária da tabela `categories`?'
+          fail: 'A chave primária da tabela `categories` não é: %{actual}'
+          hint: 'Experimente executar "SHOW CREATE TABLE categories;"'
+        check_q_reviews_foreign_keys:
+          pass: 'Quais são as duas chaves estrangeiras da tabela "reviews"?'
+          fail: 'As duas chaves estrangeiras da tabela "reviews" não são: %{actual}'
+          hint: 'Experimente executar "SHOW columns FROM reviews;"'
+        check_queries_e01:
+          pass: 'Exercício "%{ex_name}" correto'
+          fail: 'Resultado do exercício %{ex_name} incorreto.%{more_info}'
+      E02:
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+        check_queries_e02:
+          pass: 'Exercício "%{ex_name}" correto'
+          fail: 'Resultado do exercício %{ex_name} incorreto.%{more_info}'
+
+    M07:
+      default_m7: &default_m7
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+        check_function_definition:
+          pass: 'A função %{method} existe'
+          fail: 'A função %{method} não existe'
+          hint: 'Certifique-se de definir a função utilizando a palavra chave "def"'
+      E01:
+        <<: *default_m7
+
+        check_job_class_is_defined:
+          pass: 'A classe da solução existe'
+          fail: 'A classe %{klass} não existe'
+          hint: 'Certifique-se de definir a classe corretamente'
+        check_digits_constant_is_correctly_defined:
+          pass: 'A constante %{constant} está corretamente definida'
+          fail: 'A constante %{constant} não está definida corretamente'
+          hint: 'Certifique-se de que a constante está definida E contém o conteúdo esperado'
+        check_execution_time_is_less_than_2_seconds:
+          pass: 'O tempo de execução foi %{time} segundos, que é inferior a 2 segundos'
+          fail: 'O tempo de execução foi %{time} segundos, que é superior a 2 segundos'
+          hint: 'Utilize Threads para tornar o tempo de execução menor'
+      E02:
+        <<: *default_m7
+
+        check_producer_class_is_defined:
+          pass: 'A classe Producer existe'
+          fail: 'A classe %{klass} não existe'
+          hint: 'Certifique-se de definir a classe corretamente'
+        check_consumer_class_is_defined:
+          pass: 'A classe Consumer existe'
+          fail: 'A classe %{klass} não existe'
+          hint: 'Certifique-se de definir a classe corretamente'
+        check_producer_is_producing_expected_integers:
+          pass: 'Os valores produzidos pelo produtor estão corretos %{values}'
+          fail: 'Os valores produzidos pelo produtor estão incorretos %{values}'
+          hint: 'Certifique-se de produzir os valores corretos [131, 271, 991, 3102, 8172, 9102]'
+        check_consumer_is_consuming_integers_as_expected:
+          pass: 'Os valores consumidos pelo consumidor estão corretos %{values}'
+          fail: 'Os valores consumidos pelo consumidor estão incorretos %{values}'
+          hint: 'Certifique-se de consumir os valores corretamente. Deve resultar em [1310, 2710, 9910, 31020, 81720, 91020]'
+
+    M08:
+      E01:
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+        check_answers:
+          pass: '%{msg}'
+          fail: '%{msg}'
+          hint: 'Nenhuma dica'
+
+      E02:
+        check_solution_file_exists:
+          pass: 'Arquivo com o formulário HTML existe'
+          fail: 'Arquivo com o formulário HTML não existe: %{f}'
+          hint: 'Utilize a opção --dir para apontar o corretor para o diretório do projeto do formulário'
+
+        check_run_casper:
+          pass: "%{msg}"
+          fail: "%{msg}"
+          hint: 'Nenhuma dica'
+    M09:
+      E01:
+        check_rails_server:
+          pass: 'O servidor do rails está rodando'
+          fail: 'O servidor do rails não está rodando na porta 8080'
+          hint: 'Tente iniciar o servidor do rails com o comando: rails server --binding 0.0.0.0 --port 8080'
+
+        check_home_page:
+          pass: 'A página inicial do Blog foi criada'
+          fail: 'A página inicial do Blog não foi criada (http://localhost:8080/)'
+          hint: ''
+
+        check_create_article_home:
+          pass: 'O artigo foi criado e apareceu na página inicial'
+          fail: 'O artigo não foi criado ou não apareceu na página inicial'
+          hint: 'Tenha certeza de que depois de criar um artigo, o seu título aparece na página inicial'
+
+        check_create_article_page:
+          pass: 'O artigo foi criado e apareceu na página /artigo/:id'
+          fail: 'O artigo não foi criado ou não apareceu na página /artigo/:id'
+          hint: 'Tenha certeza de que depois de criar um artigo, o seu título aparece na página /artigo/:id'
+
+        check_create_article_category:
+          pass: 'O artigo foi criado e apareceu na página /categoria?c=NOME_CATEGORIA'
+          fail: 'O artigo não foi criado ou não apareceu na página /categoria?c=NOME_CATEGORIA'
+          hint: 'Tenha certeza de que depois de criar um artigo, o seu título aparece na página /categoria?c=NOME_CATEGORIA'
+
+        check_view_count:
+          pass: 'O contador de visitas está funcionando'
+          fail: 'O contador de visitas não está funcionando'
+          hint: 'Verifique se ao abrir a página inicial do Blog, o contador de visitas em /articles é incrementado. Siga corretamente o enunciado!'
+
+        final_check_delete_article:
+          pass: 'O artigo criado pelo corretor foi removido'
+          fail: 'O artigo criado pelo corretor não pôde ser removido'
+          hint: 'Tenha certeza de que depois de criar um artigo, é possível remover ele. Lembre-se do vídeo de CRUD.'
+
+    M10:
+      E01:
+        check_solution_file_exists:
+          pass: 'Arquivo de solução existe'
+          fail: 'Arquivo de solução do exercício não existe: %{f}'
+          hint: 'Crie um arquivo para a sua solução'
+
+        check_app_is_running:
+          pass: 'A aplicação está rodando no endereço informado'
+          fail: 'A aplicação não está rodando no endereço informado: %{url}'
+          hint: 'Verifique se a aplicação subiu corretamente no heroku. O comando `heroku logs` pode ajudar.'

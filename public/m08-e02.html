@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M08-E02</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M08-E02</h1>
+
+<h2>Objetivo</h2>
+
+<ul>
+<li>Praticar conceitos de HTML, CSS e JavaScript através da alteração de uma página simples de cadastro de usuário.</li>
+</ul>
+
+<h2>Configuração</h2>
+
+<ol>
+<li><p>Caso ainda não exista, crie o diretório <code>~/workspace/ep-exercicios/m8</code> para a resolução dos exercícios deste módulo.</p></li>
+<li><p>Obtenha o diretório com os arquivos dos exercícios executando os comando abaixo:</p>
+<div class="highlight"><pre>cp ~/.ep/cli/public/supplies/m08/form.zip ~/workspace/ep-exercicios/m8/
+
+<span class="nb">cd</span> ~/workspace/ep-exercicios/m8/
+
+<span class="c"># Cria um novo diretório chamado &quot;form&quot; com os arquivos dos exercícios.</span>
+unzip form.zip -d form
+</pre></div></li>
+<li><p>Abra o arquivo <code>form.html</code> no editor de texto:</p>
+<div class="highlight"><pre><span class="vg">c9</span><span class="w"> </span><span class="o">~/</span><span class="vg">workspace</span><span class="o">/</span><span class="vg">ep</span><span class="o">-</span><span class="vg">exercicios</span><span class="o">/</span><span class="vg">m8</span><span class="o">/</span><span class="vg">form</span><span class="o">/</span><span class="vg">form</span><span class="o">.</span><span class="vg">html</span>
+</pre></div></li>
+<li><p>Clique no botão <strong>Run</strong> na interface do Cloud 9 (mostrado abaixo) para iniciar um servidor Web que será usado para acessar a página HTML do nosso exercício fora do Cloud 9.</p>
+
+<p><img src="assets/images/m08_c9_run.png" style="border: 1px dashed #CA3B3A; padding: 10px;"></p></li>
+<li><p>Observe o painel que foi aberto no Cloud 9 quando você clicou no botão <strong>Run</strong> (mostrado abaixo). Copie a URL que foi impressa no painel e abra essa URL no seu navegador. Nós recomendamos que você use o Google Chrome, porque esse foi o navegador usado nos vídeos, e porque o corretor foi testado neste navegador.</p>
+
+<p><img src="assets/images/m08_c9_apached_annotated.png" style="border: 1px dashed #CA3B3A; padding: 10px;"></p></li>
+<li><p>Abra o <em>Developer Tools</em> clicando em uma área qualquer da página do formulário e, em seguida, na opção <strong>Inspecionar</strong> (ou <strong>Inspect</strong>, dependendo do idioma do seu navegador). Outra forma de abrir o <em>Developer Tools</em> é usando o atalho <code>Ctrl + Shift + i</code> (Windows ou Linux).</p></li>
+</ol>
+
+<h2>Instruções</h2>
+
+<p>Ao longo dos exercícios descritos no próximo item, você precisará alterar os arquivos que recebeu (<code>form.html</code>, <code>form.css</code> e <code>form.js</code>) de acordo com o que o exercício pede que seja feito.</p>
+
+<p>Sempre que você alterar algum destes arquivos, não se esqueça de salvá-lo antes de recarregar a página no navegador.</p>
+
+<p><strong>Atenção:</strong> não modifique o arquivo <strong>form-test.js</strong>, pois ele é usado para a correção.</p>
+
+<h2>Exercícios</h2>
+
+<h5>1) Mudar a cor das mensagens de erro para vermelho</h5>
+
+<p>Se você não preencher nenhum campo do formulário e clicar no botão <strong>Enviar</strong>, verá que são exibidas diversas mensagens de erro (mensagens de validação). Elas estão em azul e, neste exercício, você deve alterar o CSS da página (arquivo <code>form.css</code>) para que as mensagens de erros de validação apareça em vermelho.</p>
+
+<h5>2) Deixar todos os <code>&lt;p&gt;</code> em negrito</h5>
+
+<p>Alterar o CSS para que todos os elementos de parágrafo (<code>&lt;p&gt;</code>) apareçam em
+negrito. Um bom lugar para começar é consultando a lista de propriedades relacionadas a fontes, listadas
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts" target="_blank">aqui</a> (olhe a lista <strong>Properties</strong>).</p>
+
+<h5>3) Implementar a validação de data de nascimento</h5>
+
+<p>Atualmente, a única verificação associada ao campo <code>birthday</code> é a validação de
+presença (isto é, o campo é considerado inválido se estiver em branco), mas também é necessário verificar se o valor informado pelo
+usuário é válido.</p>
+
+<p>O valor será considerado válido se for uma string que obedece ao formato
+clássico <code>dd/mm/yyyy</code>. Por exemplo, <code>25/04/1979</code> é uma data válida. Já os valores <code>25-04-1979</code> ou <code>25041979</code> não são válidos e não deveriam ser aceitos pelo validador, que está escrito em JavaScript.</p>
+
+<p>Para completar este exercício, veja a função <code>validateBirthday</code> do arquivo <code>form.js</code>.
+Também é uma boa ideia olhar outros métodos que fazem validação e que já estão
+implementados, para ter uma ideia de como implementar.</p>
+
+<h5>4) Implementar a validação de confirmação de senha</h5>
+
+<p>Atualmente, a única verificação associada ao campo <code>password-confirmation</code> é a validação de
+presença, mas também é necessário verificar se o valor informado é igual ao valor
+informado no campo <code>password</code>.</p>
+
+<p>Para completar este item, veja a função <code>validatePasswordConfirmation</code> do arquivo <code>form.js</code>.</p>
+
+<h5>5) Exibir mensagem de confirmação quando o usuário clicar no botão &quot;Limpar&quot;</h5>
+
+<p>Atualmente, quando o usuário clica no botão &quot;Limpar&quot;, o formulário inteiro é apagado (faça o teste para verificar!). Este é,
+de fato, o comportamento esperado, mas queremos exibir uma mensagem de confirmação antes. Dessa
+forma, se o usuário clicar no botão sem querer, não perderá todos os dados que já preencheu até
+o momento.</p>
+
+<p>Altere a função <code>cleanUp</code> do JavaScript, que é responsável por esconder as mensagens de erro do formulário, para implementar este
+comportamento.</p>
+
+<p>Você deve usar o método <code>window.confirm()</code>(documentação <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm" target="_blank">aqui</a>) para
+exibir a mensagem &quot;Tem certeza que deseja apagar o formulário?&quot;.</p>
+
+<p>Se o usuário clicar em &quot;Cancelar&quot;, a ação deve ser cancelada, ou seja, o formulário deve <strong>permanecer inalterado</strong>.</p>
+
+<p><strong>Observação:</strong> Note que apagar os campos do formulário é um comportamento padrão do evento <code>click</code> de elementos <code>&lt;input&gt;</code> que tem o atributo <code>type=&quot;reset&quot;</code>. Ou seja, esse comportamento nem aparece na função <code>cleanUp</code>, mas você precisará impedi-lo caso o usuário clique em &quot;Cancelar&quot;.</p>
+
+<h5>6) Quando um checkbox estiver selecionado, o rótulo associado deve aparecer em itálico</h5>
+
+<p>Implemente o seguinte comportamento: sempre que um <em>checkbox</em> for
+selecionado, o rótulo associado a ele (&quot;Algoritmos&quot;, &quot;Hardware&quot;, etc) deve ficar em itálico.
+Se o usuário cancelar a seleção, o rótulo deve voltar ao normal.</p>
+
+<p>Algumas dicas:</p>
+
+<ul>
+<li>Você pode definir uma regra no CSS para um seletor de classe, por exemplo, <code>.selected</code>, que deixa um texto em itálico. A ideia é que, quando um elemento qualquer do HTML tiver essa classe, vai ficar com o seu conteúdo em itálico. Assim, o JavaScript só precisa se encarregar de adicionar/remover esta classe ao elemento apropriado. Esta implementação é parecida com a forma que está sendo usada para mostrar/esconder as mensagens de erro.</li>
+<li>Se o objeto <code>elem</code> é um objeto que representa um checkbox, o atributo <code>elem.checked</code>
+pode ser usado para descobrir se o checkbox está selecionado.</li>
+<li>Se <code>elem</code> é um objeto do DOM, <code>elem.parentElement</code> pode ser usado para obter o elemento-pai
+deste objeto.</li>
+<li>Sempre que um <em>checkbox</em> é marcado ou desmarcado, o evento <a href="https://developer.mozilla.org/en-US/docs/Web/Events/change" target="_blank"><code>change</code></a> é disparado para aquele elemento.</li>
+</ul>
+
+<h5>7) Adicionar campo de telefone, com validações apropriadas</h5>
+
+<p>Altere o HTML para adicionar um novo campo, &quot;Telefone&quot;, logo abaixo do campo &quot;Data de nascimento&quot;.</p>
+
+<p>Em seguida, altere o JavaScript para adicionar validações de presença e de formato neste novo campo.
+Para um telefone ser válido, ele deve conter apenas dígitos, no mínimo 10 (DDD + 8 dígitos) e no
+máximo 11 (DDD + 9 dígitos), sem espaços ou sinais de pontuação. Por exemplo, um telefone válido seria &quot;11999926644&quot;, enquanto &quot;(11) 99992-6644&quot; seria inválido.</p>
+
+<ul>
+<li>No HTML e no JavaScript, use o termo <code>phone</code> para o telefone. Por exemplo, a classe da div deve ser <code>group-for-phone</code>, o <code>&lt;input&gt;</code> deve ter atributo <code>name=&quot;phone&quot;</code>, etc.</li>
+<li>Observe a implementação do campo &quot;Data de nascimento&quot; (<code>birthday</code>) para ter ideias.</li>
+</ul>
+
+<h2>Correção e submissão do exercício</h2>
+
+<ol>
+<li><p>Use o <code>ep-cli</code> para corrigir a sua solução:</p>
+<div class="highlight"><pre><span class="vg">ep</span><span class="o">-</span><span class="vg">cli</span><span class="w"> </span><span class="vg">corrigir</span><span class="w"> </span><span class="o">--</span><span class="vg">dir</span><span class="w"> </span><span class="o">~/</span><span class="vg">workspace</span><span class="o">/</span><span class="vg">ep</span><span class="o">-</span><span class="vg">exercicios</span><span class="o">/</span><span class="vg">m8</span><span class="o">/</span><span class="vg">form</span><span class="w"> </span><span class="mf">8.2</span>
+</pre></div></li>
+<li><p>Use o <code>ep-cli</code> para enviar a sua resolução:</p>
+<div class="highlight"><pre><span class="vg">ep</span><span class="o">-</span><span class="vg">cli</span><span class="w"> </span><span class="vg">enviar</span><span class="w"> </span><span class="mf">8.2</span>
+</pre></div></li>
+<li><p><strong>Atualização do seu GitHub:</strong> caso ainda não possua, crie um repositório público no Github chamado <code>studies</code>. Adicione uma pasta chamada <code>front-end</code> dentro dele e, nesta pasta, adicione o diretório do projeto (diretório <code>form</code>).</p></li>
+</ol>
+
+    </div>
+  </body>
+</html>

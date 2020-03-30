@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>M08-E01</title>
+
+    <link rel="stylesheet" href="assets/styles/layout.css" media="all">
+    <link rel="stylesheet" href="assets/styles/github-markdown.css" media="all">
+    <link rel="stylesheet" href="assets/styles/pygments.css" media="all">
+  </head>
+  <body>
+    <header>
+      <h1>Estágio em Programação — Exercícios</h1>
+    </header>
+    <div class="markdown-body">
+      <h1>Exercício M08-E01</h1>
+
+<h2>Objetivo</h2>
+
+<ul>
+<li>Praticar o uso de <strong>seletores</strong> CSS.</li>
+</ul>
+
+<h2>Instruções</h2>
+
+<p>Neste exercício, vamos praticar o uso de seletores CSS usando o jogo <strong>CSS Diner — Where we feast on CSS Selectors!</strong> (<a href="http://flukeout.github.io/" target="_blank">http://flukeout.github.io/</a>). Para começar, abra este link no seu navegador.</p>
+
+<p>A ideia do jogo é usar seletores CSS para selecionar objetos que estão sobre uma mesa de jantar. Existem 26 níveis no jogo e, a cada nível, os seletores vão ficando mais complexos. Vamos completar o primeiro nível juntos, para você entender melhor como funciona.</p>
+
+<p><strong>Exemplo: resolução do nível 1</strong></p>
+
+<ol>
+<li><p>Certifique-se de que você está no primeiro nível: na primeira linha do painel à direita da página, deve estar escrito <strong>Level 1 of 26</strong>.</p></li>
+<li><p>O enunciado do nível fica no topo da página. Portanto, no nível 1 o enunciado é &quot;Select the plates&quot; (&quot;Selecione os pratos&quot;), o que significa que devemos usar um seletor CSS que vai selecionar os dois pratos que estão sobre a mesa.</p></li>
+<li><p>Abaixo da mesa, na área <strong>HTML Viewer</strong>, fica o HTML que corresponde à nossa &quot;mesa de jantar&quot;. Esse HTML será diferente para cada nível do jogo, e você vai precisar analisá-lo para entender como montar o seu seletor. Por exemplo, nesse nível, vemos que existe uma <code>&lt;div&gt;</code> que representa a mesa e que, dentro dela, existem dois elementos <code>&lt;plate&gt;</code>, cada um correspondente a um prato.</p></li>
+<li><p>Nós precisamos selecionar os pratos, certo? Portanto, considerando o HTML que foi dado, o seletor mais simples que podemos usar é apenas <code>plate</code>, que é um seletor de elemento. Assim, digite &quot;plate&quot; na linha 1 do painel <strong>CSS Editor</strong>, que fica à esquerda do HTML, e pressione <code>Enter</code>.</p></li>
+<li><p>Pronto! A mesa foi reordenada, e agora você está no nível 2 do jogo (<em>Select the bento boxes</em>). Mas antes de continuar, leia este enunciado até o final para saber como a sua resolução será entregue pelo <code>ep-cli</code>.</p></li>
+</ol>
+
+<h3>Mais informações sobre o jogo</h3>
+
+<ul>
+<li><p>Quando você digita um seletor incorreto e aperta <code>Enter</code>, o painel com os editores de CSS e HTML &quot;treme&quot;. Ou seja, se o painel tremer, é porque você não acertou ainda.</p></li>
+<li><p>O painel à direita tem uma pequena documentação que é relevante para cada nível. Por exemplo, nos níveis 1 e 2, repare que a documentação é sobre seletores de tipo (<em>Type Selector</em>), o que já é uma dica do tipo de seletor que você vai precisar usar nestes níveis.</p></li>
+<li><p>O jogo completo contém 26 níveis, mas, para o nosso exercício, você precisa completar apenas os seguintes níveis:</p>
+
+<ul>
+<li>1 a 15</li>
+<li>18</li>
+<li>25</li>
+<li>26</li>
+</ul>
+
+<p>Os outros também são interessantes e úteis, mas ficam como opcionais.</p></li>
+</ul>
+
+<h2>Arquivo de submissão</h2>
+
+<ol>
+<li><p>Crie o diretório <code>~/workspace/ep-exercicios/m8</code> para a resolução dos exercícios deste módulo.</p></li>
+<li><p>Neste diretório, crie um arquivo de solução para o exercício (<code>m08-e01.txt</code>).</p></li>
+<li><p>Neste arquivo, coloque as suas respostas, no formato de um seletor por linha e, em cada linha, o número do nível seguido de parênteses e da solução, como mostrado no exemplo abaixo.</p>
+<div class="highlight"><pre>1) seletor-1
+2) .seletor-2 &gt; .seletor-3
+3) #seletor-4
+... etc
+</pre></div></li>
+</ol>
+
+<h2>Correção e submissão do exercício</h2>
+
+<ol>
+<li><p>Use o <code>ep-cli</code> para corrigir e enviar a sua resolução.</p></li>
+<li><p><strong>Atualização do seu GitHub:</strong> caso ainda não possua, crie um repositório público no Github chamado <code>studies</code>. Adicione uma pasta chamada <code>front-end</code> dentro dele e, nesta pasta, adicione o diretório do projeto (diretório <code>form</code>).</p></li>
+</ol>
+
+    </div>
+  </body>
+</html>
