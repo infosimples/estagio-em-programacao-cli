@@ -9,6 +9,7 @@ begin
 rescue
   puts Paint["Não foi encontrado nenhum corretor para o exercício #{M}.#{E}",
              :red, :bold]
+  puts Paint["Exemplo de como rodar: ep MODULO.EXERCICIO", :yellow]
   exit
 end
 
