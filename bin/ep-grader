@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+M, E = ARGV[0].to_s.split('.')[0, 2].map { |n| n.to_i.to_s.rjust(2, '0') }
+
+require_relative '../lib/grader'
+
+begin
+  grader = Graders.const_get("M#{M}").const_get("E#{E}")
+rescue
+  puts Paint["Não foi encontrado nenhum corretor para o exercício #{M}.#{E}",
+             :red, :bold]
+  exit
+end
+
+work_dir = File.expand_path("../exercicios/#{M}/#{E}", File.dirname(__FILE__))
+# puts "Corrigindo exercício no diretório: #{work_dir}"
+# puts
+
+begin
+  grader.new(work_dir: work_dir, show_hints: true).run
+rescue Exception => e
+  puts Paint["Erro ao corrigir o exercício.", :red, :bold]
+  puts e.message
+  puts e.backtrace
+  raise
+end

@@ -56,10 +56,10 @@ module Graders
           msg += "\t#{error.backtrace.join("\n\t")}"
         end
       else
-        msg  = I18n.t("#{i18n_forced_scope || i18n_scope}.fail", i18n_args)
+        msg  = I18n.t("#{i18n_forced_scope || i18n_scope}.fail", **i18n_args)
       end
 
-      hint = I18n.t("#{i18n_forced_scope || i18n_scope}.hint", i18n_args)
+      hint = I18n.t("#{i18n_forced_scope || i18n_scope}.hint", **i18n_args)
       @checks << [:fail, msg, hint]
       print_result(@checks.last)
 
@@ -145,17 +145,6 @@ module Graders
         skip_count: skip_count,
         graded_at: Time.now.iso8601
       }
-    end
-
-    #
-    # Save the grading summary, as a YAML, in an encrypted file.
-    #
-    def save_results
-      CourseCli::Analytics.record_grading(summary[:module], summary[:exercise], solution_file, summary)
-
-      File.open(CourseCli::PathHelper.gradings_file(summary[:module], summary[:exercise]), 'w') do |f|
-        f.write(Encryption.encrypt(summary.to_yaml))
-      end
     end
   end
 end
