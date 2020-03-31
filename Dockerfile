@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   ca-certificates \
   curl \
+  wget \
   gzip \
   libreadline-dev \
   patch \
@@ -37,26 +38,26 @@ RUN apt-get install -y zlib1g-dev liblzma-dev
 RUN apt-get install -y git
 
 # install rbenv
-ENV RBENV_ROOT $HOME/.rbenv
+ENV RBENV_ROOT /root/.rbenv
 RUN git clone https://github.com/rbenv/rbenv.git $RBENV_ROOT && \
     git clone https://github.com/rbenv/ruby-build.git $RBENV_ROOT/plugins/ruby-build && \
     $RBENV_ROOT/plugins/ruby-build/install.sh
 ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
-RUN echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 
 # install ruby
 RUN rbenv install 2.7.0 && rbenv global 2.7.0
 ENV RBENV_VERSION 2.7.0
 
 # add app directory
-ENV APP_HOME /ep
+ENV APP_HOME /root/ep
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # bundle gems
 ENV BUNDLE_JOBS="$(nproc)"
-ENV BUNDLE_PATH=/bundle
+ENV BUNDLE_PATH=/root/bundle
 RUN mkdir $BUNDLE_PATH
 ADD Gemfile $APP_HOME
 RUN bundle install
@@ -65,4 +66,4 @@ RUN bundle install
 ENV PATH $APP_HOME/bin:$BUNDLE_PATH/bin:$PATH
 
 RUN echo 'function ep { bundle exec $APP_HOME/bin/ep-grader $*; }' >> /etc/profile.d/rbenv.sh
-RUN echo 'function ep { bundle exec $APP_HOME/bin/ep-grader $*; }' >> $HOME/.bashrc
+RUN echo 'function ep { bundle exec $APP_HOME/bin/ep-grader $*; }' >> /root/.bashrc

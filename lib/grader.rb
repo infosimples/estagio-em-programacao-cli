@@ -9,6 +9,7 @@ require 'time'
 require 'yaml'
 require 'fileutils'
 require 'pathname'
+require 'open-uri'
 
 # Load Grader
 require_relative 'graders/base'

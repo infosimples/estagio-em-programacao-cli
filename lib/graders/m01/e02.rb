@@ -15,7 +15,7 @@ module Graders
         FileUtils.rm Dir.glob(File.expand_path('*.html', @work_dir))
 
         # Execute the script
-        @data[:contents] = open('http://www.tldp.org/LDP/intro-linux/html/intro-linux.html').read.encode('utf-8', invalid: :replace, replace: '?')
+        @data[:contents] = URI.open('http://www.tldp.org/LDP/intro-linux/html/intro-linux.html').read.encode('utf-8', invalid: :replace, replace: '?')
         @data[:output] = %x[cd #{File.dirname(file)} && ./#{File.basename(file)}]
       end
 

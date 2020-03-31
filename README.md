@@ -21,7 +21,6 @@ Prepare seu ambiente:
 ```bash
 cd ~/ep
 docker build -t ep .
-docker run -it -v $(pwd):/ep ep bundle install
-docker run -it -v $(pwd):/ep ep bash
+docker run -it -v ~/ep:/root/ep ep bash
 ```
 

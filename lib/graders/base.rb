@@ -31,7 +31,10 @@ module Graders
     # @return [Array<Symbol>] An array of test methods names.
     #
     def test_methods
-      self.public_methods(false).select { |m| m.to_s.start_with?('check_') }
+      _, m, e = self.class.to_s.split('::').map(&:to_sym)
+      expected = I18n.backend.translations['pt-BR'.to_sym][:graders][m][e].keys
+      implemented = self.public_methods(false).select { |m| m.to_s.start_with?('check_') }
+      expected.find_all { |m| implemented.include?(m) }
     end
 
     #

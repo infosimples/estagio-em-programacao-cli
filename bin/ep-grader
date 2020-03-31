@@ -12,15 +12,14 @@ rescue
   exit
 end
 
-work_dir = File.expand_path("../exercicios/#{M}/#{E}", File.dirname(__FILE__))
+work_dir = File.expand_path("../exercicios/m#{M.to_i}/e#{E.to_i}",
+  File.dirname(__FILE__))
 # puts "Corrigindo exercício no diretório: #{work_dir}"
 # puts
 
 begin
   grader.new(work_dir: work_dir, show_hints: true).run
 rescue Exception => e
-  puts Paint["Erro ao corrigir o exercício.", :red, :bold]
-  puts e.message
-  puts e.backtrace
-  raise
+  puts Paint["Houve uma falha ao tentar corrigir o exercício.", :red, :bold]
+  raise e
 end

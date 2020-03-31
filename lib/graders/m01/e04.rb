@@ -4,7 +4,7 @@ module Graders
 
       def run_tests
         @file_name = File.expand_path('m1-e4.sh', @work_dir)
-        @file = File.open(@file_name, 'rb').read
+        @file = File.open(@file_name, 'rb').read if File.exists?(@file_name)
         test_methods.each do |tm|
           @test_name = tm
           self.send(tm)
