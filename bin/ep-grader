@@ -13,9 +13,14 @@ rescue
   exit
 end
 
-work_dir = File.expand_path("../exercicios/m#{M.to_i}/e#{E.to_i}",
-  File.dirname(__FILE__))
-# puts "Corrigindo exercício no diretório: #{work_dir}"
+if M.to_i == 2
+  work_dir = File.expand_path("../exercicios/m#{M.to_i}",
+    File.dirname(__FILE__))
+else
+  work_dir = File.expand_path("../exercicios/m#{M.to_i}/e#{E.to_i}",
+    File.dirname(__FILE__))
+end
+# puts Paint["Corrigindo exercício no diretório: #{work_dir}", :yellow]
 # puts
 
 begin

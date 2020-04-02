@@ -50,7 +50,7 @@ module Graders
     # @param [String] hint_msg The hint message to display as help.
     # @param [Bool] abort If true, correction will not proceed.
     #
-    def mark_fail(i18n_args: nil, abort: false, error_msg: nil, error: nil, backtrace: true, i18n_forced_scope: nil)
+    def mark_fail(i18n_args: {}, abort: false, error_msg: nil, error: nil, backtrace: true, i18n_forced_scope: nil)
       if error
         error_msg ||= "Erro ao executar o teste."
         msg  = "#{error_msg} Mensagem: #{error.message}\n"
