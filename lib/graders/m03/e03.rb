@@ -1,3 +1,5 @@
+require_relative 'e01'
+
 module Graders
   module M03
     class E03 < Graders::M03::E01
