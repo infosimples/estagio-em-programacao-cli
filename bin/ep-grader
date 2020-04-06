@@ -15,10 +15,10 @@ end
 
 case M.to_i
 when 2, 4
-  work_dir = File.expand_path("../exercicios/m#{M.to_i}",
+  work_dir = File.expand_path("~/ep/exercicios/m#{M.to_i}",
     File.dirname(__FILE__))
 else
-  work_dir = File.expand_path("../exercicios/m#{M.to_i}/e#{E.to_i}",
+  work_dir = File.expand_path("~/ep/exercicios/m#{M.to_i}/e#{E.to_i}",
     File.dirname(__FILE__))
 end
 # puts Paint["Corrigindo exercício no diretório: #{work_dir}", :yellow]
