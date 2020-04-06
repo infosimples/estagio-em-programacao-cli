@@ -13,7 +13,8 @@ rescue
   exit
 end
 
-if M.to_i == 2
+case M.to_i
+when 2, 4
   work_dir = File.expand_path("../exercicios/m#{M.to_i}",
     File.dirname(__FILE__))
 else

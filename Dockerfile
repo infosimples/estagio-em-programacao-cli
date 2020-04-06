@@ -6,19 +6,21 @@ ENV LANG C.UTF-8
 
 # Install some dependencies and useful packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  autoconf \
-  bison \
+  autoconf        \
+  bison           \
   build-essential \
   ca-certificates \
-  curl \
-  wget \
-  zip  \
-  gzip \
+  curl            \
+  wget            \
+  zip             \
+  unzip           \
+  tree            \
+  gzip            \
   libreadline-dev \
-  patch \
-  pkg-config \
-  sed \
-  zlib1g-dev \
+  patch           \
+  pkg-config      \
+  sed             \
+  zlib1g-dev      \
   apt-utils
 
 # Update time zone

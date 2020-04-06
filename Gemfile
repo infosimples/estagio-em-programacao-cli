@@ -19,3 +19,4 @@ gem 'terminal-table'
 
 gem 'colorize'
 gem 'pry'
+gem 'byebug'

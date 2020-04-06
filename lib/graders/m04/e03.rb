@@ -24,7 +24,7 @@ module Graders
       end
 
       def check_fresh_product_is_discount_eligible
-        if FreshProduct.included_modules.include?(DiscountEligible)
+        if defined?(FreshProduct) && FreshProduct.included_modules.include?(DiscountEligible)
           mark_pass
         else
           mark_fail abort: true
@@ -32,7 +32,7 @@ module Graders
       end
 
       def check_digital_product_is_discount_eligible
-        if DigitalProduct.included_modules.include?(DiscountEligible)
+        if defined?(DigitalProduct) && DigitalProduct.included_modules.include?(DiscountEligible)
           mark_pass
         else
           mark_fail abort: true
