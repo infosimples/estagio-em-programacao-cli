@@ -742,6 +742,7 @@ pt-BR:
         check_queries_e01:
           pass: 'Exercício "%{ex_name}" correto'
           fail: 'Resultado do exercício %{ex_name} incorreto.%{more_info}'
+          hint: ''
       E02:
         check_solution_file_exists:
           pass: 'Arquivo de solução existe'
@@ -750,6 +751,7 @@ pt-BR:
         check_queries_e02:
           pass: 'Exercício "%{ex_name}" correto'
           fail: 'Resultado do exercício %{ex_name} incorreto.%{more_info}'
+          hint: ''
 
     M07:
       default_m7: &default_m7

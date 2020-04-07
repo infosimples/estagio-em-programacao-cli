@@ -60,13 +60,11 @@ WORKDIR $APP_HOME
 
 # bundle gems
 ENV BUNDLE_JOBS="$(nproc)"
-ENV BUNDLE_PATH=/root/bundle
-RUN mkdir $BUNDLE_PATH
 ADD Gemfile $APP_HOME
 RUN bundle install
 
 # Add application binaries paths to PATH
-ENV PATH $APP_HOME/bin:$BUNDLE_PATH/bin:$PATH
+ENV PATH $APP_HOME/bin:$PATH
 
 RUN echo 'function ep { bundle exec $APP_HOME/bin/ep-grader $*; }' >> /etc/profile.d/rbenv.sh
 RUN echo 'function ep { bundle exec $APP_HOME/bin/ep-grader $*; }' >> /root/.bashrc
