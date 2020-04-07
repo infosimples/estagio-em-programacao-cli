@@ -14,7 +14,7 @@ rescue
 end
 
 case M.to_i
-when 2, 4, 6
+when 2, 4, 6, 8
   work_dir = File.expand_path("~/ep/exercicios/m#{M.to_i}",
     File.dirname(__FILE__))
 else

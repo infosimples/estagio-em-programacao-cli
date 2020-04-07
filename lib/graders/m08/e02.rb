@@ -25,6 +25,8 @@ module Graders
           @casperjs = "/opt/bin/casperjs"
         elsif File.exists?("/usr/bin/casperjs")
           @casperjs = "/usr/bin/casperjs"
+        elsif File.exists?("/usr/local/bin/casperjs")
+          @casperjs = "/usr/local/bin/casperjs"
         end
 
         if File.exists?(@casperjs || "blablabla")
