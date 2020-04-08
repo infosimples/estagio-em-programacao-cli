@@ -73,4 +73,4 @@ ADD Gemfile $APP_HOME
 RUN bundle install
 
 # Add application binaries paths to PATH
-ENV PATH $APP_HOME/bin:$PATH
+ENV PATH $APP_HOME/bin:$APP_HOME/exercicios/m9/blog/bin:$PATH

@@ -823,12 +823,12 @@ pt-BR:
       E01:
         check_rails_server:
           pass: 'O servidor do rails está rodando'
-          fail: 'O servidor do rails não está rodando na porta 8080'
-          hint: 'Tente iniciar o servidor do rails com o comando: rails server --binding 0.0.0.0 --port 8080'
+          fail: 'O servidor do rails não está rodando na porta 3000'
+          hint: 'Tente iniciar o servidor do rails com o comando: rails server --binding 0.0.0.0 --port 3000'
 
         check_home_page:
           pass: 'A página inicial do Blog foi criada'
-          fail: 'A página inicial do Blog não foi criada (http://localhost:8080/)'
+          fail: 'A página inicial do Blog não foi criada (http://localhost:3000/)'
           hint: ''
 
         check_create_article_home:
