@@ -1,5 +1,7 @@
 require 'terminal-table'
 require 'base64'
+require_relative 'e01'
+require_relative 'e02'
 
 module Graders
   module M06
