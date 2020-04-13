@@ -1,4 +1,5 @@
 require_relative 'base'
+require_relative 'e02'
 
 module Graders
   module M06
