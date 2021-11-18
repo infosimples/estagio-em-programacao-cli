@@ -73,8 +73,8 @@ module Graders
     # Record a successful test in the correction.
     # @param [String] msg The success message.
     #
-    def mark_pass(i18n_args: nil, i18n_forced_scope: nil)
-      msg = I18n.t("#{i18n_forced_scope || i18n_scope}.pass", i18n_args)
+    def mark_pass(i18n_args: {}, i18n_forced_scope: nil)
+      msg = I18n.t("#{i18n_forced_scope || i18n_scope}.pass", **i18n_args)
       @checks << [:pass, msg]
       print_result(@checks.last)
     end
@@ -83,8 +83,8 @@ module Graders
     # Record a notice in tests to help the user to know what is been tested.
     # @param [String] msg The notice message.
     #
-    def notice(i18n_args: nil)
-      msg = I18n.t("#{i18n_scope}.notice", i18n_args)
+    def notice(i18n_args: {})
+      msg = I18n.t("#{i18n_scope}.notice", **i18n_args)
       @checks << [:notice, msg]
       print_result(@checks.last)
     end
