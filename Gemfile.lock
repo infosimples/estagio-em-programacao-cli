@@ -8,7 +8,7 @@ GEM
     connection_pool (2.2.5)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    git (1.6.0)
+    git (1.11.0)
       rchardet (~> 1.8)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
