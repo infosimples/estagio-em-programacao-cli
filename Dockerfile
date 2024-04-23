@@ -1,5 +1,5 @@
 # Base image
-FROM ubuntu:18.04
+FROM --platform=linux/amd64 ubuntu:18.04
 
 # Set default environment encoding (for e.g, we may paste latin chars)
 ENV LANG C.UTF-8
