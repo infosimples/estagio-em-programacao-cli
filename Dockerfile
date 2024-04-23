@@ -37,6 +37,9 @@ RUN apt-get install -y zlib1g-dev liblzma-dev
 # for git
 RUN apt-get install -y git
 
+# Form psych (YAML)
+RUN apt-get install -y libyaml-dev
+
 # Node + NPM
 RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
 RUN apt-get install -y nodejs
