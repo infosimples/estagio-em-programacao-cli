@@ -59,8 +59,8 @@ RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
 RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 
 # install ruby
-RUN rbenv install 2.7.0 && rbenv global 2.7.0
-ENV RBENV_VERSION 2.7.0
+RUN rbenv install 2.7.8 && rbenv global 2.7.8
+ENV RBENV_VERSION 2.7.8
 
 # add app directory
 ENV APP_HOME /root/ep
