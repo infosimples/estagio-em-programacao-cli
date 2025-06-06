@@ -189,7 +189,7 @@ module Graders
       private
 
       def commit_delta(git, commit_id)
-        str = git.lib.send(:command, "show --name-status --oneline #{commit_id}")
+        str = git.lib.send(:command, "show", "--name-status", "--oneline", commit_id) # Isso corrige o problema 
         arr = str.scan(/([ACDMRTUXB])\t(.*)/)
 
         delta = {}
