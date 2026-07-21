@@ -1,8 +1,12 @@
 # Base image
-FROM --platform=linux/amd64 ubuntu:18.04
+# A plataforma é amd64 (necessária para o binário x86_64 do PhantomJS e para os
+# gems nativos). Usamos um ARG em vez de constante para evitar o aviso do linter
+# FromPlatformFlagConstDisallowed; o padrão continua linux/amd64.
+ARG PLATFORM=linux/amd64
+FROM --platform=${PLATFORM} ubuntu:18.04
 
 # Set default environment encoding (for e.g, we may paste latin chars)
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 
 # Install some dependencies and useful packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -61,20 +65,20 @@ RUN git clone --depth 1 https://github.com/casperjs/casperjs.git /opt/casperjs &
     ln -sf /opt/casperjs/bin/casperjs /usr/local/bin/casperjs
 
 # install rbenv
-ENV RBENV_ROOT /root/.rbenv
+ENV RBENV_ROOT=/root/.rbenv
 RUN git clone https://github.com/rbenv/rbenv.git $RBENV_ROOT && \
     git clone https://github.com/rbenv/ruby-build.git $RBENV_ROOT/plugins/ruby-build && \
     $RBENV_ROOT/plugins/ruby-build/install.sh
-ENV PATH $RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
+ENV PATH=$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH
 RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
 RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 
 # install ruby
 RUN rbenv install 2.7.8 && rbenv global 2.7.8
-ENV RBENV_VERSION 2.7.8
+ENV RBENV_VERSION=2.7.8
 
 # add app directory
-ENV APP_HOME /root/ep
+ENV APP_HOME=/root/ep
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
@@ -89,4 +93,4 @@ ADD Gemfile.lock $APP_HOME
 RUN bundle install
 
 # Add application binaries paths to PATH
-ENV PATH $APP_HOME/bin:$APP_HOME/exercicios/m9/blog/bin:$PATH
+ENV PATH=$APP_HOME/bin:$APP_HOME/exercicios/m9/blog/bin:$PATH
