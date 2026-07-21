@@ -33,7 +33,7 @@ module Graders
 
       def check_solution_file_exists
         f = expected_file_path
-        if File.exists?(f)
+        if File.exist?(f)
           self.solution_file = f
           mark_pass
         else

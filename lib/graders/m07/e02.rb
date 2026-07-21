@@ -11,7 +11,7 @@ module Graders
       def check_solution_file_exists
         f = File.expand_path('m7-e2.rb', @work_dir)
 
-        if File.exists?(f)
+        if File.exist?(f)
           self.solution_file = f
           mark_pass
           load f
@@ -41,7 +41,7 @@ module Graders
         queue = Queue.new
         Producer.new(queue).run()
         values = queue.size.times.map { queue.pop }
-        values.delete_if { |v| !v.is_a?(Fixnum) }
+        values.delete_if { |v| !v.is_a?(Integer) }
         if values.sort == [131, 271, 991, 3102, 8172, 9102]
           mark_pass i18n_args: { values: values }
         else

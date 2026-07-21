@@ -138,7 +138,10 @@ module Graders
         end
       end
 
-      skip_count  = tests_count - pass_count - fail_count
+      # Alguns corretores emitem vários resultados por método de teste, então o
+      # total de acertos+erros pode exceder tests_count. Limitamos em 0 para não
+      # exibir "não executados" negativo no resumo.
+      skip_count  = [tests_count - pass_count - fail_count, 0].max
 
       @summary = {
         module: name_tokens[1][1..-1].to_i,

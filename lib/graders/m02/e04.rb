@@ -5,6 +5,11 @@ module Graders
     class E04 < Graders::Base
 
       def run_tests
+        unless File.directory?(File.expand_path('ep-m2-repo/.git', @work_dir))
+          puts Paint["[x] Repositório 'ep-m2-repo' não encontrado. Faça o exercício M02-E01 (clonar o repositório) antes deste.", :red]
+          return
+        end
+
         test_methods.each do |tm|
           @test_name = tm
           self.send(tm)

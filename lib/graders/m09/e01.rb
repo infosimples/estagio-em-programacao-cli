@@ -26,14 +26,12 @@ module Graders
       end
 
       def check_rails_server
-        begin
-          agent.get "http://#{HOST}:#{PORT}/"
-          mark_pass
-        rescue Net::HTTP::Persistent::Error => error
-          mark_fail
-        rescue
-          mark_pass
-        end
+        agent.get "http://#{HOST}:#{PORT}/"
+        mark_pass
+      rescue
+        # Se o servidor não está acessível, falha e interrompe a correção com uma
+        # mensagem clara, em vez de deixar os testes seguintes lançarem exceção.
+        mark_fail abort: true
       end
 
       def check_home_page
@@ -105,6 +103,8 @@ module Graders
         else
           mark_fail
         end
+      rescue
+        mark_fail
       end
 
       def final_check_delete_article

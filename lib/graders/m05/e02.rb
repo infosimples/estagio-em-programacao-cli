@@ -51,10 +51,23 @@ module Graders
         end
       end
 
+      # Sobrescreve o test_methods da base: os testes de CPF/e-mail/preço são
+      # criados dinamicamente em `setup` e não têm chave própria no i18n, então
+      # o filtro por i18n da base os descartava (só rodavam 2 verificações).
+      # Aqui rodamos primeiro o carregamento do arquivo/classe e, em seguida,
+      # todos os testes dinâmicos de validação.
+      def test_methods
+        ordered = [:check_solution_file_exists, :check_exercise_class_is_defined]
+        dynamic = public_methods(false).select do |m|
+          m.to_s.start_with?('check_valid', 'check_invalid')
+        end.sort
+        ordered + dynamic
+      end
+
       def check_solution_file_exists
         f = File.expand_path('m5-e2.rb', @work_dir)
 
-        if File.exists?(f)
+        if File.exist?(f)
           self.solution_file = f
           mark_pass
           load f

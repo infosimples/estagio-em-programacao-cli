@@ -6,6 +6,10 @@ module Graders
 
       def run_tests
         f = File.expand_path('simple_store/irb_helper.rb', @work_dir)
+        unless File.exist?(f)
+          puts Paint["[x] Projeto 'simple_store' não encontrado em #{@work_dir}. Baixe-o conforme o enunciado do exercício M04-E01.", :red]
+          return
+        end
         load f
 
         test_methods.each do |tm|
@@ -39,7 +43,7 @@ module Graders
       end
 
       def mark_file_exists(f)
-        if File.exists?(f)
+        if File.exist?(f)
           mark_pass
           load f
         else

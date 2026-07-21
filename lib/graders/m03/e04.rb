@@ -11,7 +11,7 @@ module Graders
       def check_solution_file_exists
         f = File.expand_path('m3-e4.rb', @work_dir)
 
-        if File.exists?(f)
+        if File.exist?(f)
           mark_pass
           load f
         else

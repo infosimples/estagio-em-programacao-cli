@@ -14,10 +14,10 @@ module Graders
       def execute_m1_e3_script(file, url, term)
         f = File.expand_path(url.split('/').last, @work_dir)
         # Remove file
-        FileUtils.rm f if File.exists?(f)
+        FileUtils.rm f if File.exist?(f)
 
         # Execute the script
-        @data[term.to_sym] = open(url).read.encode('utf-8', invalid: :replace, replace: '?')
+        @data[term.to_sym] = URI.open(url).read.encode('utf-8', invalid: :replace, replace: '?')
         @data["output_#{term}".to_sym] = %x[cd #{File.dirname(file)} && ./#{File.basename(file)} #{url} #{term}]
       end
 

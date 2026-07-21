@@ -12,7 +12,7 @@ module Graders
       def check_solution_file_exists
         f = File.expand_path('form.html', @work_dir)
 
-        if File.exists?(f)
+        if File.exist?(f)
           self.solution_file = f
           mark_pass
         else
@@ -21,15 +21,15 @@ module Graders
       end
 
       def check_run_casper
-        if File.exists?("/opt/bin/casperjs")
+        if File.exist?("/opt/bin/casperjs")
           @casperjs = "/opt/bin/casperjs"
-        elsif File.exists?("/usr/bin/casperjs")
+        elsif File.exist?("/usr/bin/casperjs")
           @casperjs = "/usr/bin/casperjs"
-        elsif File.exists?("/usr/local/bin/casperjs")
+        elsif File.exist?("/usr/local/bin/casperjs")
           @casperjs = "/usr/local/bin/casperjs"
         end
 
-        if File.exists?(@casperjs || "blablabla")
+        if File.exist?(@casperjs || "blablabla")
           out = %x{#{@casperjs}}
 
           if out[/CasperJS version [^ ]+ at/]
