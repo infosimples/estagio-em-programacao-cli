@@ -40,17 +40,25 @@ RUN apt-get install -y git
 # Form psych (YAML)
 RUN apt-get install -y libyaml-dev
 
-# Node + NPM
-RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
-RUN apt-get install -y nodejs
+# Node
+# OBS: o script NodeSource setup_13.x foi descontinuado e passou a quebrar o
+# build (chave GPG NO_PUBKEY / repositório node_13.x sem assinatura válida).
+# Instalamos o Node direto do repositório do Ubuntu 18.04. Não instalamos o
+# pacote `npm` do bionic porque sua dependência node-gyp está quebrada; o
+# CasperJS é instalado via git logo abaixo (não precisa de npm).
+RUN apt-get update && apt-get install -y nodejs
 
 # phantomJS + casperJS
-RUN apt-get install -y libfreetype6-dev libfontconfig1-dev wget bzip2
+# OBS: o `bin/casperjs` é um script Python, então instalamos o CasperJS via git
+# (evita o npm quebrado do bionic). Ele é colocado em /usr/local/bin, um dos
+# caminhos que o corretor do m08/e02 procura.
+RUN apt-get install -y libfreetype6-dev libfontconfig1-dev wget bzip2 python
 RUN wget --no-check-certificate https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
 RUN tar xvf phantomjs-2.1.1-linux-x86_64.tar.bz2
 RUN mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/
 RUN rm -rf phantom*
-RUN npm install -g casperjs
+RUN git clone --depth 1 https://github.com/casperjs/casperjs.git /opt/casperjs && \
+    ln -sf /opt/casperjs/bin/casperjs /usr/local/bin/casperjs
 
 # install rbenv
 ENV RBENV_ROOT /root/.rbenv
@@ -71,8 +79,13 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # bundle gems
+# OBS: copiamos TAMBÉM o Gemfile.lock para que o bundler use as versões testadas.
+# Sem o lock, o bundle install resolvia tudo para as versões mais recentes
+# (ex.: git 1.6.0->1.19.1, mechanize 2.7.7->2.14.0, nokogiri 1.12.5->1.15.7,
+# terminal-table 1.8.0->4.0.0), introduzindo drift não testado nos corretores.
 ENV BUNDLE_JOBS="$(nproc)"
 ADD Gemfile $APP_HOME
+ADD Gemfile.lock $APP_HOME
 RUN bundle install
 
 # Add application binaries paths to PATH
